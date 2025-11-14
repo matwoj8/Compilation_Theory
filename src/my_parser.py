@@ -21,16 +21,8 @@ class Mparser(Parser):
         ("left", 'TRANSPOSE')
     )
 
-    @_('instructions_opt')
-    def program(self, p):
-        pass
-
     @_('instructions')
-    def instructions_opt(self, p):
-        pass
-
-    @_('')
-    def instructions_opt(self, p):
+    def program(self, p):
         pass
 
     @_('instructions instruction')
@@ -46,18 +38,16 @@ class Mparser(Parser):
        'return_i',
        'while_l',
        'for_l',
-        'if_i', 
-       'PRINT "(" expr ")" ";"',
+        'if_i',
        'PRINT expr ";"',
        'PRINT expr "," expr ";"',
        'assign ";"')
     def instruction(self, p):
         pass
 
-    @_('"{" instructions_opt "}"')
+    @_('"{" instructions "}"')
     def instruction(self, p):
         pass
-
 
 
     @_('expr "+" expr',
@@ -133,23 +123,17 @@ class Mparser(Parser):
     def for_l(self, p):
         pass
 
-    
+    @_('ID',
+      'tab',
+      'matrix')
+    def value(self, p):
+        pass
 
-    @_('ID "=" expr' ,
-       'ID PLUSASSIGN expr',
-       'ID MINUSASSIGN expr',
-       'ID TIMESASSIGN expr',
-       'ID DIVASSIGN expr',
-       'tab "=" expr',
-       'tab PLUSASSIGN expr',
-       'tab MINUSASSIGN expr',
-       'tab TIMESASSIGN expr',
-       'tab DIVASSIGN expr',
-       'matrix "=" expr',
-       'matrix PLUSASSIGN expr',
-       'matrix MINUSASSIGN expr',
-       'matrix TIMESASSIGN expr',
-       'matrix DIVASSIGN expr')
+    @_('value "=" expr' ,
+       'value PLUSASSIGN expr',
+       'value MINUSASSIGN expr',
+       'value TIMESASSIGN expr',
+       'value DIVASSIGN expr')
     def assign(self, p):
         pass
 
