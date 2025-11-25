@@ -1,0 +1,4432 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> instructions_or_empty
+Rule 2     instructions_or_empty -> instructions
+Rule 3     instructions_or_empty -> <empty>
+Rule 4     instructions -> instruction
+Rule 5     instructions -> instructions instruction
+Rule 6     instruction -> { instructions }
+Rule 7     instruction -> assign ;
+Rule 8     instruction -> PRINT expr , expr ;
+Rule 9     instruction -> PRINT expr ;
+Rule 10    instruction -> if_i
+Rule 11    instruction -> for_l
+Rule 12    instruction -> while_l
+Rule 13    instruction -> return_i
+Rule 14    instruction -> CONTINUE ;
+Rule 15    instruction -> BREAK ;
+Rule 16    expr -> matrix
+Rule 17    expr -> - expr  [precedence=right, level=8]
+Rule 18    expr -> ( expr )
+Rule 19    expr -> ID
+Rule 20    expr -> STRING
+Rule 21    expr -> FLOATNUM
+Rule 22    expr -> INTNUM
+Rule 23    expr -> expr TRANSPOSE  [precedence=left, level=9]
+Rule 24    expr -> expr NEQ expr  [precedence=nonassoc, level=5]
+Rule 25    expr -> expr EQ expr  [precedence=nonassoc, level=5]
+Rule 26    expr -> expr LE expr  [precedence=nonassoc, level=5]
+Rule 27    expr -> expr GE expr  [precedence=nonassoc, level=5]
+Rule 28    expr -> expr LT expr  [precedence=nonassoc, level=5]
+Rule 29    expr -> expr GT expr  [precedence=nonassoc, level=5]
+Rule 30    expr -> expr DOTDIV expr  [precedence=left, level=7]
+Rule 31    expr -> expr DOTTIMES expr  [precedence=left, level=7]
+Rule 32    expr -> expr DOTMINUS expr  [precedence=left, level=6]
+Rule 33    expr -> expr DOTPLUS expr  [precedence=left, level=6]
+Rule 34    expr -> expr / expr  [precedence=left, level=7]
+Rule 35    expr -> expr * expr  [precedence=left, level=7]
+Rule 36    expr -> expr - expr  [precedence=left, level=6]
+Rule 37    expr -> expr + expr  [precedence=left, level=6]
+Rule 38    tab -> ID [ expr , expr ]
+Rule 39    tab -> ID [ expr ]
+Rule 40    matrix -> EYE ( INTNUM )
+Rule 41    matrix -> ONES ( INTNUM )
+Rule 42    matrix -> ZEROS ( INTNUM )
+Rule 43    matrix -> [ lists ]
+Rule 44    lists -> list
+Rule 45    lists -> list ; lists
+Rule 46    list -> expr
+Rule 47    list -> expr , list
+Rule 48    if_i -> IF ( expr ) instruction ELSE instruction  [precedence=right, level=2]
+Rule 49    if_i -> IF ( expr ) instruction  [precedence=right, level=1]
+Rule 50    return_i -> RETURN expr ;
+Rule 51    return_i -> RETURN ;
+Rule 52    while_l -> WHILE ( expr ) instruction
+Rule 53    for_l -> FOR ID = expr : expr instruction
+Rule 54    value -> matrix
+Rule 55    value -> tab
+Rule 56    value -> ID
+Rule 57    assign -> value DIVASSIGN expr  [precedence=right, level=4]
+Rule 58    assign -> value TIMESASSIGN expr  [precedence=right, level=4]
+Rule 59    assign -> value MINUSASSIGN expr  [precedence=right, level=4]
+Rule 60    assign -> value PLUSASSIGN expr  [precedence=right, level=4]
+Rule 61    assign -> value = expr  [precedence=right, level=3]
+
+Terminals, with rules where they appear:
+
+(                    : 18 40 41 42 48 49 52
+)                    : 18 40 41 42 48 49 52
+*                    : 35
++                    : 37
+,                    : 8 38 47
+-                    : 17 36
+/                    : 34
+:                    : 53
+;                    : 7 8 9 14 15 45 50 51
+=                    : 53 61
+BREAK                : 15
+CONTINUE             : 14
+DIVASSIGN            : 57
+DOTDIV               : 30
+DOTMINUS             : 32
+DOTPLUS              : 33
+DOTTIMES             : 31
+ELSE                 : 48
+EQ                   : 25
+EYE                  : 40
+FLOATNUM             : 21
+FOR                  : 53
+GE                   : 27
+GT                   : 29
+ID                   : 19 38 39 53 56
+IF                   : 48 49
+INTNUM               : 22 40 41 42
+LE                   : 26
+LT                   : 28
+MINUSASSIGN          : 59
+NEQ                  : 24
+ONES                 : 41
+PLUSASSIGN           : 60
+PRINT                : 8 9
+RETURN               : 50 51
+STRING               : 20
+TIMESASSIGN          : 58
+TRANSPOSE            : 23
+WHILE                : 52
+ZEROS                : 42
+[                    : 38 39 43
+]                    : 38 39 43
+error                : 
+{                    : 6
+}                    : 6
+
+Nonterminals, with rules where they appear:
+
+assign               : 7
+expr                 : 8 8 9 17 18 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 46 47 48 49 50 52 53 53 57 58 59 60 61
+for_l                : 11
+if_i                 : 10
+instruction          : 4 5 48 48 49 52 53
+instructions         : 2 5 6
+instructions_or_empty : 1
+list                 : 44 45 47
+lists                : 43 45
+matrix               : 16 54
+program              : 0
+return_i             : 13
+tab                  : 55
+value                : 57 58 59 60 61
+while_l              : 12
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . instructions_or_empty
+    (2) instructions_or_empty -> . instructions
+    (3) instructions_or_empty -> .
+    (4) instructions -> . instruction
+    (5) instructions -> . instructions instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    $end            reduce using rule 3 (instructions_or_empty -> .)
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    program                        shift and go to state 1
+    instructions_or_empty          shift and go to state 2
+    instructions                   shift and go to state 3
+    instruction                    shift and go to state 4
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 1
+
+    (0) S' -> program .
+
+
+state 2
+
+    (1) program -> instructions_or_empty .
+    $end            reduce using rule 1 (program -> instructions_or_empty .)
+
+
+state 3
+
+    (2) instructions_or_empty -> instructions .
+    (5) instructions -> instructions . instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    $end            reduce using rule 2 (instructions_or_empty -> instructions .)
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instruction                    shift and go to state 26
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 4
+
+    (4) instructions -> instruction .
+    {               reduce using rule 4 (instructions -> instruction .)
+    PRINT           reduce using rule 4 (instructions -> instruction .)
+    CONTINUE        reduce using rule 4 (instructions -> instruction .)
+    BREAK           reduce using rule 4 (instructions -> instruction .)
+    IF              reduce using rule 4 (instructions -> instruction .)
+    FOR             reduce using rule 4 (instructions -> instruction .)
+    WHILE           reduce using rule 4 (instructions -> instruction .)
+    RETURN          reduce using rule 4 (instructions -> instruction .)
+    ID              reduce using rule 4 (instructions -> instruction .)
+    EYE             reduce using rule 4 (instructions -> instruction .)
+    ONES            reduce using rule 4 (instructions -> instruction .)
+    ZEROS           reduce using rule 4 (instructions -> instruction .)
+    [               reduce using rule 4 (instructions -> instruction .)
+    $end            reduce using rule 4 (instructions -> instruction .)
+    }               reduce using rule 4 (instructions -> instruction .)
+
+
+state 5
+
+    (6) instruction -> { . instructions }
+    (4) instructions -> . instruction
+    (5) instructions -> . instructions instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instructions                   shift and go to state 27
+    instruction                    shift and go to state 4
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 6
+
+    (7) instruction -> assign . ;
+    ;               shift and go to state 28
+
+
+state 7
+
+    (8) instruction -> PRINT . expr , expr ;
+    (9) instruction -> PRINT . expr ;
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 29
+    matrix                         shift and go to state 30
+
+state 8
+
+    (10) instruction -> if_i .
+    {               reduce using rule 10 (instruction -> if_i .)
+    PRINT           reduce using rule 10 (instruction -> if_i .)
+    CONTINUE        reduce using rule 10 (instruction -> if_i .)
+    BREAK           reduce using rule 10 (instruction -> if_i .)
+    IF              reduce using rule 10 (instruction -> if_i .)
+    FOR             reduce using rule 10 (instruction -> if_i .)
+    WHILE           reduce using rule 10 (instruction -> if_i .)
+    RETURN          reduce using rule 10 (instruction -> if_i .)
+    ID              reduce using rule 10 (instruction -> if_i .)
+    EYE             reduce using rule 10 (instruction -> if_i .)
+    ONES            reduce using rule 10 (instruction -> if_i .)
+    ZEROS           reduce using rule 10 (instruction -> if_i .)
+    [               reduce using rule 10 (instruction -> if_i .)
+    $end            reduce using rule 10 (instruction -> if_i .)
+    }               reduce using rule 10 (instruction -> if_i .)
+    ELSE            reduce using rule 10 (instruction -> if_i .)
+
+
+state 9
+
+    (11) instruction -> for_l .
+    {               reduce using rule 11 (instruction -> for_l .)
+    PRINT           reduce using rule 11 (instruction -> for_l .)
+    CONTINUE        reduce using rule 11 (instruction -> for_l .)
+    BREAK           reduce using rule 11 (instruction -> for_l .)
+    IF              reduce using rule 11 (instruction -> for_l .)
+    FOR             reduce using rule 11 (instruction -> for_l .)
+    WHILE           reduce using rule 11 (instruction -> for_l .)
+    RETURN          reduce using rule 11 (instruction -> for_l .)
+    ID              reduce using rule 11 (instruction -> for_l .)
+    EYE             reduce using rule 11 (instruction -> for_l .)
+    ONES            reduce using rule 11 (instruction -> for_l .)
+    ZEROS           reduce using rule 11 (instruction -> for_l .)
+    [               reduce using rule 11 (instruction -> for_l .)
+    $end            reduce using rule 11 (instruction -> for_l .)
+    }               reduce using rule 11 (instruction -> for_l .)
+    ELSE            reduce using rule 11 (instruction -> for_l .)
+
+
+state 10
+
+    (12) instruction -> while_l .
+    {               reduce using rule 12 (instruction -> while_l .)
+    PRINT           reduce using rule 12 (instruction -> while_l .)
+    CONTINUE        reduce using rule 12 (instruction -> while_l .)
+    BREAK           reduce using rule 12 (instruction -> while_l .)
+    IF              reduce using rule 12 (instruction -> while_l .)
+    FOR             reduce using rule 12 (instruction -> while_l .)
+    WHILE           reduce using rule 12 (instruction -> while_l .)
+    RETURN          reduce using rule 12 (instruction -> while_l .)
+    ID              reduce using rule 12 (instruction -> while_l .)
+    EYE             reduce using rule 12 (instruction -> while_l .)
+    ONES            reduce using rule 12 (instruction -> while_l .)
+    ZEROS           reduce using rule 12 (instruction -> while_l .)
+    [               reduce using rule 12 (instruction -> while_l .)
+    $end            reduce using rule 12 (instruction -> while_l .)
+    }               reduce using rule 12 (instruction -> while_l .)
+    ELSE            reduce using rule 12 (instruction -> while_l .)
+
+
+state 11
+
+    (13) instruction -> return_i .
+    {               reduce using rule 13 (instruction -> return_i .)
+    PRINT           reduce using rule 13 (instruction -> return_i .)
+    CONTINUE        reduce using rule 13 (instruction -> return_i .)
+    BREAK           reduce using rule 13 (instruction -> return_i .)
+    IF              reduce using rule 13 (instruction -> return_i .)
+    FOR             reduce using rule 13 (instruction -> return_i .)
+    WHILE           reduce using rule 13 (instruction -> return_i .)
+    RETURN          reduce using rule 13 (instruction -> return_i .)
+    ID              reduce using rule 13 (instruction -> return_i .)
+    EYE             reduce using rule 13 (instruction -> return_i .)
+    ONES            reduce using rule 13 (instruction -> return_i .)
+    ZEROS           reduce using rule 13 (instruction -> return_i .)
+    [               reduce using rule 13 (instruction -> return_i .)
+    $end            reduce using rule 13 (instruction -> return_i .)
+    }               reduce using rule 13 (instruction -> return_i .)
+    ELSE            reduce using rule 13 (instruction -> return_i .)
+
+
+state 12
+
+    (14) instruction -> CONTINUE . ;
+    ;               shift and go to state 37
+
+
+state 13
+
+    (15) instruction -> BREAK . ;
+    ;               shift and go to state 38
+
+
+state 14
+
+    (57) assign -> value . DIVASSIGN expr
+    (58) assign -> value . TIMESASSIGN expr
+    (59) assign -> value . MINUSASSIGN expr
+    (60) assign -> value . PLUSASSIGN expr
+    (61) assign -> value . = expr
+    DIVASSIGN       shift and go to state 39
+    TIMESASSIGN     shift and go to state 40
+    MINUSASSIGN     shift and go to state 41
+    PLUSASSIGN      shift and go to state 42
+    =               shift and go to state 43
+
+
+state 15
+
+    (48) if_i -> IF . ( expr ) instruction ELSE instruction
+    (49) if_i -> IF . ( expr ) instruction
+    (               shift and go to state 44
+
+
+state 16
+
+    (53) for_l -> FOR . ID = expr : expr instruction
+    ID              shift and go to state 45
+
+
+state 17
+
+    (56) value -> ID .
+    (38) tab -> ID . [ expr , expr ]
+    (39) tab -> ID . [ expr ]
+    DIVASSIGN       reduce using rule 56 (value -> ID .)
+    TIMESASSIGN     reduce using rule 56 (value -> ID .)
+    MINUSASSIGN     reduce using rule 56 (value -> ID .)
+    PLUSASSIGN      reduce using rule 56 (value -> ID .)
+    =               reduce using rule 56 (value -> ID .)
+    [               shift and go to state 46
+
+
+state 18
+
+    (52) while_l -> WHILE . ( expr ) instruction
+    (               shift and go to state 47
+
+
+state 19
+
+    (50) return_i -> RETURN . expr ;
+    (51) return_i -> RETURN . ;
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    ;               shift and go to state 49
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 48
+    matrix                         shift and go to state 30
+
+state 20
+
+    (54) value -> matrix .
+    DIVASSIGN       reduce using rule 54 (value -> matrix .)
+    TIMESASSIGN     reduce using rule 54 (value -> matrix .)
+    MINUSASSIGN     reduce using rule 54 (value -> matrix .)
+    PLUSASSIGN      reduce using rule 54 (value -> matrix .)
+    =               reduce using rule 54 (value -> matrix .)
+
+
+state 21
+
+    (55) value -> tab .
+    DIVASSIGN       reduce using rule 55 (value -> tab .)
+    TIMESASSIGN     reduce using rule 55 (value -> tab .)
+    MINUSASSIGN     reduce using rule 55 (value -> tab .)
+    PLUSASSIGN      reduce using rule 55 (value -> tab .)
+    =               reduce using rule 55 (value -> tab .)
+
+
+state 22
+
+    (40) matrix -> EYE . ( INTNUM )
+    (               shift and go to state 50
+
+
+state 23
+
+    (41) matrix -> ONES . ( INTNUM )
+    (               shift and go to state 51
+
+
+state 24
+
+    (42) matrix -> ZEROS . ( INTNUM )
+    (               shift and go to state 52
+
+
+state 25
+
+    (43) matrix -> [ . lists ]
+    (44) lists -> . list
+    (45) lists -> . list ; lists
+    (46) list -> . expr
+    (47) list -> . expr , list
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    lists                          shift and go to state 53
+    list                           shift and go to state 54
+    expr                           shift and go to state 55
+    matrix                         shift and go to state 30
+
+state 26
+
+    (5) instructions -> instructions instruction .
+    {               reduce using rule 5 (instructions -> instructions instruction .)
+    PRINT           reduce using rule 5 (instructions -> instructions instruction .)
+    CONTINUE        reduce using rule 5 (instructions -> instructions instruction .)
+    BREAK           reduce using rule 5 (instructions -> instructions instruction .)
+    IF              reduce using rule 5 (instructions -> instructions instruction .)
+    FOR             reduce using rule 5 (instructions -> instructions instruction .)
+    WHILE           reduce using rule 5 (instructions -> instructions instruction .)
+    RETURN          reduce using rule 5 (instructions -> instructions instruction .)
+    ID              reduce using rule 5 (instructions -> instructions instruction .)
+    EYE             reduce using rule 5 (instructions -> instructions instruction .)
+    ONES            reduce using rule 5 (instructions -> instructions instruction .)
+    ZEROS           reduce using rule 5 (instructions -> instructions instruction .)
+    [               reduce using rule 5 (instructions -> instructions instruction .)
+    $end            reduce using rule 5 (instructions -> instructions instruction .)
+    }               reduce using rule 5 (instructions -> instructions instruction .)
+
+
+state 27
+
+    (6) instruction -> { instructions . }
+    (5) instructions -> instructions . instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    }               shift and go to state 56
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instruction                    shift and go to state 26
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 28
+
+    (7) instruction -> assign ; .
+    {               reduce using rule 7 (instruction -> assign ; .)
+    PRINT           reduce using rule 7 (instruction -> assign ; .)
+    CONTINUE        reduce using rule 7 (instruction -> assign ; .)
+    BREAK           reduce using rule 7 (instruction -> assign ; .)
+    IF              reduce using rule 7 (instruction -> assign ; .)
+    FOR             reduce using rule 7 (instruction -> assign ; .)
+    WHILE           reduce using rule 7 (instruction -> assign ; .)
+    RETURN          reduce using rule 7 (instruction -> assign ; .)
+    ID              reduce using rule 7 (instruction -> assign ; .)
+    EYE             reduce using rule 7 (instruction -> assign ; .)
+    ONES            reduce using rule 7 (instruction -> assign ; .)
+    ZEROS           reduce using rule 7 (instruction -> assign ; .)
+    [               reduce using rule 7 (instruction -> assign ; .)
+    $end            reduce using rule 7 (instruction -> assign ; .)
+    }               reduce using rule 7 (instruction -> assign ; .)
+    ELSE            reduce using rule 7 (instruction -> assign ; .)
+
+
+state 29
+
+    (8) instruction -> PRINT expr . , expr ;
+    (9) instruction -> PRINT expr . ;
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               shift and go to state 57
+    ;               shift and go to state 58
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 30
+
+    (16) expr -> matrix .
+    ,               reduce using rule 16 (expr -> matrix .)
+    ;               reduce using rule 16 (expr -> matrix .)
+    TRANSPOSE       reduce using rule 16 (expr -> matrix .)
+    NEQ             reduce using rule 16 (expr -> matrix .)
+    EQ              reduce using rule 16 (expr -> matrix .)
+    LE              reduce using rule 16 (expr -> matrix .)
+    GE              reduce using rule 16 (expr -> matrix .)
+    LT              reduce using rule 16 (expr -> matrix .)
+    GT              reduce using rule 16 (expr -> matrix .)
+    DOTDIV          reduce using rule 16 (expr -> matrix .)
+    DOTTIMES        reduce using rule 16 (expr -> matrix .)
+    DOTMINUS        reduce using rule 16 (expr -> matrix .)
+    DOTPLUS         reduce using rule 16 (expr -> matrix .)
+    /               reduce using rule 16 (expr -> matrix .)
+    *               reduce using rule 16 (expr -> matrix .)
+    -               reduce using rule 16 (expr -> matrix .)
+    +               reduce using rule 16 (expr -> matrix .)
+    ]               reduce using rule 16 (expr -> matrix .)
+    )               reduce using rule 16 (expr -> matrix .)
+    :               reduce using rule 16 (expr -> matrix .)
+    {               reduce using rule 16 (expr -> matrix .)
+    PRINT           reduce using rule 16 (expr -> matrix .)
+    CONTINUE        reduce using rule 16 (expr -> matrix .)
+    BREAK           reduce using rule 16 (expr -> matrix .)
+    IF              reduce using rule 16 (expr -> matrix .)
+    FOR             reduce using rule 16 (expr -> matrix .)
+    WHILE           reduce using rule 16 (expr -> matrix .)
+    RETURN          reduce using rule 16 (expr -> matrix .)
+    ID              reduce using rule 16 (expr -> matrix .)
+    EYE             reduce using rule 16 (expr -> matrix .)
+    ONES            reduce using rule 16 (expr -> matrix .)
+    ZEROS           reduce using rule 16 (expr -> matrix .)
+    [               reduce using rule 16 (expr -> matrix .)
+
+
+state 31
+
+    (17) expr -> - . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 74
+    matrix                         shift and go to state 30
+
+state 32
+
+    (18) expr -> ( . expr )
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 75
+    matrix                         shift and go to state 30
+
+state 33
+
+    (19) expr -> ID .
+    ,               reduce using rule 19 (expr -> ID .)
+    ;               reduce using rule 19 (expr -> ID .)
+    TRANSPOSE       reduce using rule 19 (expr -> ID .)
+    NEQ             reduce using rule 19 (expr -> ID .)
+    EQ              reduce using rule 19 (expr -> ID .)
+    LE              reduce using rule 19 (expr -> ID .)
+    GE              reduce using rule 19 (expr -> ID .)
+    LT              reduce using rule 19 (expr -> ID .)
+    GT              reduce using rule 19 (expr -> ID .)
+    DOTDIV          reduce using rule 19 (expr -> ID .)
+    DOTTIMES        reduce using rule 19 (expr -> ID .)
+    DOTMINUS        reduce using rule 19 (expr -> ID .)
+    DOTPLUS         reduce using rule 19 (expr -> ID .)
+    /               reduce using rule 19 (expr -> ID .)
+    *               reduce using rule 19 (expr -> ID .)
+    -               reduce using rule 19 (expr -> ID .)
+    +               reduce using rule 19 (expr -> ID .)
+    ]               reduce using rule 19 (expr -> ID .)
+    )               reduce using rule 19 (expr -> ID .)
+    :               reduce using rule 19 (expr -> ID .)
+    {               reduce using rule 19 (expr -> ID .)
+    PRINT           reduce using rule 19 (expr -> ID .)
+    CONTINUE        reduce using rule 19 (expr -> ID .)
+    BREAK           reduce using rule 19 (expr -> ID .)
+    IF              reduce using rule 19 (expr -> ID .)
+    FOR             reduce using rule 19 (expr -> ID .)
+    WHILE           reduce using rule 19 (expr -> ID .)
+    RETURN          reduce using rule 19 (expr -> ID .)
+    ID              reduce using rule 19 (expr -> ID .)
+    EYE             reduce using rule 19 (expr -> ID .)
+    ONES            reduce using rule 19 (expr -> ID .)
+    ZEROS           reduce using rule 19 (expr -> ID .)
+    [               reduce using rule 19 (expr -> ID .)
+
+
+state 34
+
+    (20) expr -> STRING .
+    ,               reduce using rule 20 (expr -> STRING .)
+    ;               reduce using rule 20 (expr -> STRING .)
+    TRANSPOSE       reduce using rule 20 (expr -> STRING .)
+    NEQ             reduce using rule 20 (expr -> STRING .)
+    EQ              reduce using rule 20 (expr -> STRING .)
+    LE              reduce using rule 20 (expr -> STRING .)
+    GE              reduce using rule 20 (expr -> STRING .)
+    LT              reduce using rule 20 (expr -> STRING .)
+    GT              reduce using rule 20 (expr -> STRING .)
+    DOTDIV          reduce using rule 20 (expr -> STRING .)
+    DOTTIMES        reduce using rule 20 (expr -> STRING .)
+    DOTMINUS        reduce using rule 20 (expr -> STRING .)
+    DOTPLUS         reduce using rule 20 (expr -> STRING .)
+    /               reduce using rule 20 (expr -> STRING .)
+    *               reduce using rule 20 (expr -> STRING .)
+    -               reduce using rule 20 (expr -> STRING .)
+    +               reduce using rule 20 (expr -> STRING .)
+    ]               reduce using rule 20 (expr -> STRING .)
+    )               reduce using rule 20 (expr -> STRING .)
+    :               reduce using rule 20 (expr -> STRING .)
+    {               reduce using rule 20 (expr -> STRING .)
+    PRINT           reduce using rule 20 (expr -> STRING .)
+    CONTINUE        reduce using rule 20 (expr -> STRING .)
+    BREAK           reduce using rule 20 (expr -> STRING .)
+    IF              reduce using rule 20 (expr -> STRING .)
+    FOR             reduce using rule 20 (expr -> STRING .)
+    WHILE           reduce using rule 20 (expr -> STRING .)
+    RETURN          reduce using rule 20 (expr -> STRING .)
+    ID              reduce using rule 20 (expr -> STRING .)
+    EYE             reduce using rule 20 (expr -> STRING .)
+    ONES            reduce using rule 20 (expr -> STRING .)
+    ZEROS           reduce using rule 20 (expr -> STRING .)
+    [               reduce using rule 20 (expr -> STRING .)
+
+
+state 35
+
+    (21) expr -> FLOATNUM .
+    ,               reduce using rule 21 (expr -> FLOATNUM .)
+    ;               reduce using rule 21 (expr -> FLOATNUM .)
+    TRANSPOSE       reduce using rule 21 (expr -> FLOATNUM .)
+    NEQ             reduce using rule 21 (expr -> FLOATNUM .)
+    EQ              reduce using rule 21 (expr -> FLOATNUM .)
+    LE              reduce using rule 21 (expr -> FLOATNUM .)
+    GE              reduce using rule 21 (expr -> FLOATNUM .)
+    LT              reduce using rule 21 (expr -> FLOATNUM .)
+    GT              reduce using rule 21 (expr -> FLOATNUM .)
+    DOTDIV          reduce using rule 21 (expr -> FLOATNUM .)
+    DOTTIMES        reduce using rule 21 (expr -> FLOATNUM .)
+    DOTMINUS        reduce using rule 21 (expr -> FLOATNUM .)
+    DOTPLUS         reduce using rule 21 (expr -> FLOATNUM .)
+    /               reduce using rule 21 (expr -> FLOATNUM .)
+    *               reduce using rule 21 (expr -> FLOATNUM .)
+    -               reduce using rule 21 (expr -> FLOATNUM .)
+    +               reduce using rule 21 (expr -> FLOATNUM .)
+    ]               reduce using rule 21 (expr -> FLOATNUM .)
+    )               reduce using rule 21 (expr -> FLOATNUM .)
+    :               reduce using rule 21 (expr -> FLOATNUM .)
+    {               reduce using rule 21 (expr -> FLOATNUM .)
+    PRINT           reduce using rule 21 (expr -> FLOATNUM .)
+    CONTINUE        reduce using rule 21 (expr -> FLOATNUM .)
+    BREAK           reduce using rule 21 (expr -> FLOATNUM .)
+    IF              reduce using rule 21 (expr -> FLOATNUM .)
+    FOR             reduce using rule 21 (expr -> FLOATNUM .)
+    WHILE           reduce using rule 21 (expr -> FLOATNUM .)
+    RETURN          reduce using rule 21 (expr -> FLOATNUM .)
+    ID              reduce using rule 21 (expr -> FLOATNUM .)
+    EYE             reduce using rule 21 (expr -> FLOATNUM .)
+    ONES            reduce using rule 21 (expr -> FLOATNUM .)
+    ZEROS           reduce using rule 21 (expr -> FLOATNUM .)
+    [               reduce using rule 21 (expr -> FLOATNUM .)
+
+
+state 36
+
+    (22) expr -> INTNUM .
+    ,               reduce using rule 22 (expr -> INTNUM .)
+    ;               reduce using rule 22 (expr -> INTNUM .)
+    TRANSPOSE       reduce using rule 22 (expr -> INTNUM .)
+    NEQ             reduce using rule 22 (expr -> INTNUM .)
+    EQ              reduce using rule 22 (expr -> INTNUM .)
+    LE              reduce using rule 22 (expr -> INTNUM .)
+    GE              reduce using rule 22 (expr -> INTNUM .)
+    LT              reduce using rule 22 (expr -> INTNUM .)
+    GT              reduce using rule 22 (expr -> INTNUM .)
+    DOTDIV          reduce using rule 22 (expr -> INTNUM .)
+    DOTTIMES        reduce using rule 22 (expr -> INTNUM .)
+    DOTMINUS        reduce using rule 22 (expr -> INTNUM .)
+    DOTPLUS         reduce using rule 22 (expr -> INTNUM .)
+    /               reduce using rule 22 (expr -> INTNUM .)
+    *               reduce using rule 22 (expr -> INTNUM .)
+    -               reduce using rule 22 (expr -> INTNUM .)
+    +               reduce using rule 22 (expr -> INTNUM .)
+    ]               reduce using rule 22 (expr -> INTNUM .)
+    )               reduce using rule 22 (expr -> INTNUM .)
+    :               reduce using rule 22 (expr -> INTNUM .)
+    {               reduce using rule 22 (expr -> INTNUM .)
+    PRINT           reduce using rule 22 (expr -> INTNUM .)
+    CONTINUE        reduce using rule 22 (expr -> INTNUM .)
+    BREAK           reduce using rule 22 (expr -> INTNUM .)
+    IF              reduce using rule 22 (expr -> INTNUM .)
+    FOR             reduce using rule 22 (expr -> INTNUM .)
+    WHILE           reduce using rule 22 (expr -> INTNUM .)
+    RETURN          reduce using rule 22 (expr -> INTNUM .)
+    ID              reduce using rule 22 (expr -> INTNUM .)
+    EYE             reduce using rule 22 (expr -> INTNUM .)
+    ONES            reduce using rule 22 (expr -> INTNUM .)
+    ZEROS           reduce using rule 22 (expr -> INTNUM .)
+    [               reduce using rule 22 (expr -> INTNUM .)
+
+
+state 37
+
+    (14) instruction -> CONTINUE ; .
+    {               reduce using rule 14 (instruction -> CONTINUE ; .)
+    PRINT           reduce using rule 14 (instruction -> CONTINUE ; .)
+    CONTINUE        reduce using rule 14 (instruction -> CONTINUE ; .)
+    BREAK           reduce using rule 14 (instruction -> CONTINUE ; .)
+    IF              reduce using rule 14 (instruction -> CONTINUE ; .)
+    FOR             reduce using rule 14 (instruction -> CONTINUE ; .)
+    WHILE           reduce using rule 14 (instruction -> CONTINUE ; .)
+    RETURN          reduce using rule 14 (instruction -> CONTINUE ; .)
+    ID              reduce using rule 14 (instruction -> CONTINUE ; .)
+    EYE             reduce using rule 14 (instruction -> CONTINUE ; .)
+    ONES            reduce using rule 14 (instruction -> CONTINUE ; .)
+    ZEROS           reduce using rule 14 (instruction -> CONTINUE ; .)
+    [               reduce using rule 14 (instruction -> CONTINUE ; .)
+    $end            reduce using rule 14 (instruction -> CONTINUE ; .)
+    }               reduce using rule 14 (instruction -> CONTINUE ; .)
+    ELSE            reduce using rule 14 (instruction -> CONTINUE ; .)
+
+
+state 38
+
+    (15) instruction -> BREAK ; .
+    {               reduce using rule 15 (instruction -> BREAK ; .)
+    PRINT           reduce using rule 15 (instruction -> BREAK ; .)
+    CONTINUE        reduce using rule 15 (instruction -> BREAK ; .)
+    BREAK           reduce using rule 15 (instruction -> BREAK ; .)
+    IF              reduce using rule 15 (instruction -> BREAK ; .)
+    FOR             reduce using rule 15 (instruction -> BREAK ; .)
+    WHILE           reduce using rule 15 (instruction -> BREAK ; .)
+    RETURN          reduce using rule 15 (instruction -> BREAK ; .)
+    ID              reduce using rule 15 (instruction -> BREAK ; .)
+    EYE             reduce using rule 15 (instruction -> BREAK ; .)
+    ONES            reduce using rule 15 (instruction -> BREAK ; .)
+    ZEROS           reduce using rule 15 (instruction -> BREAK ; .)
+    [               reduce using rule 15 (instruction -> BREAK ; .)
+    $end            reduce using rule 15 (instruction -> BREAK ; .)
+    }               reduce using rule 15 (instruction -> BREAK ; .)
+    ELSE            reduce using rule 15 (instruction -> BREAK ; .)
+
+
+state 39
+
+    (57) assign -> value DIVASSIGN . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 76
+    matrix                         shift and go to state 30
+
+state 40
+
+    (58) assign -> value TIMESASSIGN . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 77
+    matrix                         shift and go to state 30
+
+state 41
+
+    (59) assign -> value MINUSASSIGN . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 78
+    matrix                         shift and go to state 30
+
+state 42
+
+    (60) assign -> value PLUSASSIGN . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 79
+    matrix                         shift and go to state 30
+
+state 43
+
+    (61) assign -> value = . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 80
+    matrix                         shift and go to state 30
+
+state 44
+
+    (48) if_i -> IF ( . expr ) instruction ELSE instruction
+    (49) if_i -> IF ( . expr ) instruction
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 81
+    matrix                         shift and go to state 30
+
+state 45
+
+    (53) for_l -> FOR ID . = expr : expr instruction
+    =               shift and go to state 82
+
+
+state 46
+
+    (38) tab -> ID [ . expr , expr ]
+    (39) tab -> ID [ . expr ]
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 83
+    matrix                         shift and go to state 30
+
+state 47
+
+    (52) while_l -> WHILE ( . expr ) instruction
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 84
+    matrix                         shift and go to state 30
+
+state 48
+
+    (50) return_i -> RETURN expr . ;
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               shift and go to state 85
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 49
+
+    (51) return_i -> RETURN ; .
+    {               reduce using rule 51 (return_i -> RETURN ; .)
+    PRINT           reduce using rule 51 (return_i -> RETURN ; .)
+    CONTINUE        reduce using rule 51 (return_i -> RETURN ; .)
+    BREAK           reduce using rule 51 (return_i -> RETURN ; .)
+    IF              reduce using rule 51 (return_i -> RETURN ; .)
+    FOR             reduce using rule 51 (return_i -> RETURN ; .)
+    WHILE           reduce using rule 51 (return_i -> RETURN ; .)
+    RETURN          reduce using rule 51 (return_i -> RETURN ; .)
+    ID              reduce using rule 51 (return_i -> RETURN ; .)
+    EYE             reduce using rule 51 (return_i -> RETURN ; .)
+    ONES            reduce using rule 51 (return_i -> RETURN ; .)
+    ZEROS           reduce using rule 51 (return_i -> RETURN ; .)
+    [               reduce using rule 51 (return_i -> RETURN ; .)
+    $end            reduce using rule 51 (return_i -> RETURN ; .)
+    }               reduce using rule 51 (return_i -> RETURN ; .)
+    ELSE            reduce using rule 51 (return_i -> RETURN ; .)
+
+
+state 50
+
+    (40) matrix -> EYE ( . INTNUM )
+    INTNUM          shift and go to state 86
+
+
+state 51
+
+    (41) matrix -> ONES ( . INTNUM )
+    INTNUM          shift and go to state 87
+
+
+state 52
+
+    (42) matrix -> ZEROS ( . INTNUM )
+    INTNUM          shift and go to state 88
+
+
+state 53
+
+    (43) matrix -> [ lists . ]
+    ]               shift and go to state 89
+
+
+state 54
+
+    (44) lists -> list .
+    (45) lists -> list . ; lists
+    ]               reduce using rule 44 (lists -> list .)
+    ;               shift and go to state 90
+
+
+state 55
+
+    (46) list -> expr .
+    (47) list -> expr . , list
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               reduce using rule 46 (list -> expr .)
+    ]               reduce using rule 46 (list -> expr .)
+    ,               shift and go to state 91
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 56
+
+    (6) instruction -> { instructions } .
+    {               reduce using rule 6 (instruction -> { instructions } .)
+    PRINT           reduce using rule 6 (instruction -> { instructions } .)
+    CONTINUE        reduce using rule 6 (instruction -> { instructions } .)
+    BREAK           reduce using rule 6 (instruction -> { instructions } .)
+    IF              reduce using rule 6 (instruction -> { instructions } .)
+    FOR             reduce using rule 6 (instruction -> { instructions } .)
+    WHILE           reduce using rule 6 (instruction -> { instructions } .)
+    RETURN          reduce using rule 6 (instruction -> { instructions } .)
+    ID              reduce using rule 6 (instruction -> { instructions } .)
+    EYE             reduce using rule 6 (instruction -> { instructions } .)
+    ONES            reduce using rule 6 (instruction -> { instructions } .)
+    ZEROS           reduce using rule 6 (instruction -> { instructions } .)
+    [               reduce using rule 6 (instruction -> { instructions } .)
+    $end            reduce using rule 6 (instruction -> { instructions } .)
+    }               reduce using rule 6 (instruction -> { instructions } .)
+    ELSE            reduce using rule 6 (instruction -> { instructions } .)
+
+
+state 57
+
+    (8) instruction -> PRINT expr , . expr ;
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 92
+    matrix                         shift and go to state 30
+
+state 58
+
+    (9) instruction -> PRINT expr ; .
+    {               reduce using rule 9 (instruction -> PRINT expr ; .)
+    PRINT           reduce using rule 9 (instruction -> PRINT expr ; .)
+    CONTINUE        reduce using rule 9 (instruction -> PRINT expr ; .)
+    BREAK           reduce using rule 9 (instruction -> PRINT expr ; .)
+    IF              reduce using rule 9 (instruction -> PRINT expr ; .)
+    FOR             reduce using rule 9 (instruction -> PRINT expr ; .)
+    WHILE           reduce using rule 9 (instruction -> PRINT expr ; .)
+    RETURN          reduce using rule 9 (instruction -> PRINT expr ; .)
+    ID              reduce using rule 9 (instruction -> PRINT expr ; .)
+    EYE             reduce using rule 9 (instruction -> PRINT expr ; .)
+    ONES            reduce using rule 9 (instruction -> PRINT expr ; .)
+    ZEROS           reduce using rule 9 (instruction -> PRINT expr ; .)
+    [               reduce using rule 9 (instruction -> PRINT expr ; .)
+    $end            reduce using rule 9 (instruction -> PRINT expr ; .)
+    }               reduce using rule 9 (instruction -> PRINT expr ; .)
+    ELSE            reduce using rule 9 (instruction -> PRINT expr ; .)
+
+
+state 59
+
+    (23) expr -> expr TRANSPOSE .
+    ,               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    ;               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    TRANSPOSE       reduce using rule 23 (expr -> expr TRANSPOSE .)
+    NEQ             reduce using rule 23 (expr -> expr TRANSPOSE .)
+    EQ              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    LE              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    GE              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    LT              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    GT              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    DOTDIV          reduce using rule 23 (expr -> expr TRANSPOSE .)
+    DOTTIMES        reduce using rule 23 (expr -> expr TRANSPOSE .)
+    DOTMINUS        reduce using rule 23 (expr -> expr TRANSPOSE .)
+    DOTPLUS         reduce using rule 23 (expr -> expr TRANSPOSE .)
+    /               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    *               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    -               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    +               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    ]               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    )               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    :               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    {               reduce using rule 23 (expr -> expr TRANSPOSE .)
+    PRINT           reduce using rule 23 (expr -> expr TRANSPOSE .)
+    CONTINUE        reduce using rule 23 (expr -> expr TRANSPOSE .)
+    BREAK           reduce using rule 23 (expr -> expr TRANSPOSE .)
+    IF              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    FOR             reduce using rule 23 (expr -> expr TRANSPOSE .)
+    WHILE           reduce using rule 23 (expr -> expr TRANSPOSE .)
+    RETURN          reduce using rule 23 (expr -> expr TRANSPOSE .)
+    ID              reduce using rule 23 (expr -> expr TRANSPOSE .)
+    EYE             reduce using rule 23 (expr -> expr TRANSPOSE .)
+    ONES            reduce using rule 23 (expr -> expr TRANSPOSE .)
+    ZEROS           reduce using rule 23 (expr -> expr TRANSPOSE .)
+    [               reduce using rule 23 (expr -> expr TRANSPOSE .)
+
+
+state 60
+
+    (24) expr -> expr NEQ . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 93
+    matrix                         shift and go to state 30
+
+state 61
+
+    (25) expr -> expr EQ . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 94
+    matrix                         shift and go to state 30
+
+state 62
+
+    (26) expr -> expr LE . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 95
+    matrix                         shift and go to state 30
+
+state 63
+
+    (27) expr -> expr GE . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 96
+    matrix                         shift and go to state 30
+
+state 64
+
+    (28) expr -> expr LT . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 97
+    matrix                         shift and go to state 30
+
+state 65
+
+    (29) expr -> expr GT . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 98
+    matrix                         shift and go to state 30
+
+state 66
+
+    (30) expr -> expr DOTDIV . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 99
+    matrix                         shift and go to state 30
+
+state 67
+
+    (31) expr -> expr DOTTIMES . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 100
+    matrix                         shift and go to state 30
+
+state 68
+
+    (32) expr -> expr DOTMINUS . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 101
+    matrix                         shift and go to state 30
+
+state 69
+
+    (33) expr -> expr DOTPLUS . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 102
+    matrix                         shift and go to state 30
+
+state 70
+
+    (34) expr -> expr / . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 103
+    matrix                         shift and go to state 30
+
+state 71
+
+    (35) expr -> expr * . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 104
+    matrix                         shift and go to state 30
+
+state 72
+
+    (36) expr -> expr - . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 105
+    matrix                         shift and go to state 30
+
+state 73
+
+    (37) expr -> expr + . expr
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 106
+    matrix                         shift and go to state 30
+
+state 74
+
+    (17) expr -> - expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 17 (expr -> - expr .)
+    ;               reduce using rule 17 (expr -> - expr .)
+    NEQ             reduce using rule 17 (expr -> - expr .)
+    EQ              reduce using rule 17 (expr -> - expr .)
+    LE              reduce using rule 17 (expr -> - expr .)
+    GE              reduce using rule 17 (expr -> - expr .)
+    LT              reduce using rule 17 (expr -> - expr .)
+    GT              reduce using rule 17 (expr -> - expr .)
+    DOTDIV          reduce using rule 17 (expr -> - expr .)
+    DOTTIMES        reduce using rule 17 (expr -> - expr .)
+    DOTMINUS        reduce using rule 17 (expr -> - expr .)
+    DOTPLUS         reduce using rule 17 (expr -> - expr .)
+    /               reduce using rule 17 (expr -> - expr .)
+    *               reduce using rule 17 (expr -> - expr .)
+    -               reduce using rule 17 (expr -> - expr .)
+    +               reduce using rule 17 (expr -> - expr .)
+    ]               reduce using rule 17 (expr -> - expr .)
+    )               reduce using rule 17 (expr -> - expr .)
+    :               reduce using rule 17 (expr -> - expr .)
+    {               reduce using rule 17 (expr -> - expr .)
+    PRINT           reduce using rule 17 (expr -> - expr .)
+    CONTINUE        reduce using rule 17 (expr -> - expr .)
+    BREAK           reduce using rule 17 (expr -> - expr .)
+    IF              reduce using rule 17 (expr -> - expr .)
+    FOR             reduce using rule 17 (expr -> - expr .)
+    WHILE           reduce using rule 17 (expr -> - expr .)
+    RETURN          reduce using rule 17 (expr -> - expr .)
+    ID              reduce using rule 17 (expr -> - expr .)
+    EYE             reduce using rule 17 (expr -> - expr .)
+    ONES            reduce using rule 17 (expr -> - expr .)
+    ZEROS           reduce using rule 17 (expr -> - expr .)
+    [               reduce using rule 17 (expr -> - expr .)
+    TRANSPOSE       shift and go to state 59
+
+
+state 75
+
+    (18) expr -> ( expr . )
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    )               shift and go to state 107
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 76
+
+    (57) assign -> value DIVASSIGN expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               reduce using rule 57 (assign -> value DIVASSIGN expr .)
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 77
+
+    (58) assign -> value TIMESASSIGN expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               reduce using rule 58 (assign -> value TIMESASSIGN expr .)
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 78
+
+    (59) assign -> value MINUSASSIGN expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               reduce using rule 59 (assign -> value MINUSASSIGN expr .)
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 79
+
+    (60) assign -> value PLUSASSIGN expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               reduce using rule 60 (assign -> value PLUSASSIGN expr .)
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 80
+
+    (61) assign -> value = expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               reduce using rule 61 (assign -> value = expr .)
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 81
+
+    (48) if_i -> IF ( expr . ) instruction ELSE instruction
+    (49) if_i -> IF ( expr . ) instruction
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    )               shift and go to state 108
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 82
+
+    (53) for_l -> FOR ID = . expr : expr instruction
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 109
+    matrix                         shift and go to state 30
+
+state 83
+
+    (38) tab -> ID [ expr . , expr ]
+    (39) tab -> ID [ expr . ]
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               shift and go to state 110
+    ]               shift and go to state 111
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 84
+
+    (52) while_l -> WHILE ( expr . ) instruction
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    )               shift and go to state 112
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 85
+
+    (50) return_i -> RETURN expr ; .
+    {               reduce using rule 50 (return_i -> RETURN expr ; .)
+    PRINT           reduce using rule 50 (return_i -> RETURN expr ; .)
+    CONTINUE        reduce using rule 50 (return_i -> RETURN expr ; .)
+    BREAK           reduce using rule 50 (return_i -> RETURN expr ; .)
+    IF              reduce using rule 50 (return_i -> RETURN expr ; .)
+    FOR             reduce using rule 50 (return_i -> RETURN expr ; .)
+    WHILE           reduce using rule 50 (return_i -> RETURN expr ; .)
+    RETURN          reduce using rule 50 (return_i -> RETURN expr ; .)
+    ID              reduce using rule 50 (return_i -> RETURN expr ; .)
+    EYE             reduce using rule 50 (return_i -> RETURN expr ; .)
+    ONES            reduce using rule 50 (return_i -> RETURN expr ; .)
+    ZEROS           reduce using rule 50 (return_i -> RETURN expr ; .)
+    [               reduce using rule 50 (return_i -> RETURN expr ; .)
+    $end            reduce using rule 50 (return_i -> RETURN expr ; .)
+    }               reduce using rule 50 (return_i -> RETURN expr ; .)
+    ELSE            reduce using rule 50 (return_i -> RETURN expr ; .)
+
+
+state 86
+
+    (40) matrix -> EYE ( INTNUM . )
+    )               shift and go to state 113
+
+
+state 87
+
+    (41) matrix -> ONES ( INTNUM . )
+    )               shift and go to state 114
+
+
+state 88
+
+    (42) matrix -> ZEROS ( INTNUM . )
+    )               shift and go to state 115
+
+
+state 89
+
+    (43) matrix -> [ lists ] .
+    DIVASSIGN       reduce using rule 43 (matrix -> [ lists ] .)
+    TIMESASSIGN     reduce using rule 43 (matrix -> [ lists ] .)
+    MINUSASSIGN     reduce using rule 43 (matrix -> [ lists ] .)
+    PLUSASSIGN      reduce using rule 43 (matrix -> [ lists ] .)
+    =               reduce using rule 43 (matrix -> [ lists ] .)
+    ,               reduce using rule 43 (matrix -> [ lists ] .)
+    ;               reduce using rule 43 (matrix -> [ lists ] .)
+    TRANSPOSE       reduce using rule 43 (matrix -> [ lists ] .)
+    NEQ             reduce using rule 43 (matrix -> [ lists ] .)
+    EQ              reduce using rule 43 (matrix -> [ lists ] .)
+    LE              reduce using rule 43 (matrix -> [ lists ] .)
+    GE              reduce using rule 43 (matrix -> [ lists ] .)
+    LT              reduce using rule 43 (matrix -> [ lists ] .)
+    GT              reduce using rule 43 (matrix -> [ lists ] .)
+    DOTDIV          reduce using rule 43 (matrix -> [ lists ] .)
+    DOTTIMES        reduce using rule 43 (matrix -> [ lists ] .)
+    DOTMINUS        reduce using rule 43 (matrix -> [ lists ] .)
+    DOTPLUS         reduce using rule 43 (matrix -> [ lists ] .)
+    /               reduce using rule 43 (matrix -> [ lists ] .)
+    *               reduce using rule 43 (matrix -> [ lists ] .)
+    -               reduce using rule 43 (matrix -> [ lists ] .)
+    +               reduce using rule 43 (matrix -> [ lists ] .)
+    ]               reduce using rule 43 (matrix -> [ lists ] .)
+    )               reduce using rule 43 (matrix -> [ lists ] .)
+    :               reduce using rule 43 (matrix -> [ lists ] .)
+    {               reduce using rule 43 (matrix -> [ lists ] .)
+    PRINT           reduce using rule 43 (matrix -> [ lists ] .)
+    CONTINUE        reduce using rule 43 (matrix -> [ lists ] .)
+    BREAK           reduce using rule 43 (matrix -> [ lists ] .)
+    IF              reduce using rule 43 (matrix -> [ lists ] .)
+    FOR             reduce using rule 43 (matrix -> [ lists ] .)
+    WHILE           reduce using rule 43 (matrix -> [ lists ] .)
+    RETURN          reduce using rule 43 (matrix -> [ lists ] .)
+    ID              reduce using rule 43 (matrix -> [ lists ] .)
+    EYE             reduce using rule 43 (matrix -> [ lists ] .)
+    ONES            reduce using rule 43 (matrix -> [ lists ] .)
+    ZEROS           reduce using rule 43 (matrix -> [ lists ] .)
+    [               reduce using rule 43 (matrix -> [ lists ] .)
+
+
+state 90
+
+    (45) lists -> list ; . lists
+    (44) lists -> . list
+    (45) lists -> . list ; lists
+    (46) list -> . expr
+    (47) list -> . expr , list
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    list                           shift and go to state 54
+    lists                          shift and go to state 116
+    expr                           shift and go to state 55
+    matrix                         shift and go to state 30
+
+state 91
+
+    (47) list -> expr , . list
+    (46) list -> . expr
+    (47) list -> . expr , list
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 55
+    list                           shift and go to state 117
+    matrix                         shift and go to state 30
+
+state 92
+
+    (8) instruction -> PRINT expr , expr . ;
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ;               shift and go to state 118
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 93
+
+    (24) expr -> expr NEQ expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 24 (expr -> expr NEQ expr .)
+    ;               reduce using rule 24 (expr -> expr NEQ expr .)
+    NEQ             reduce using rule 24 (expr -> expr NEQ expr .)
+    EQ              reduce using rule 24 (expr -> expr NEQ expr .)
+    LE              reduce using rule 24 (expr -> expr NEQ expr .)
+    GE              reduce using rule 24 (expr -> expr NEQ expr .)
+    LT              reduce using rule 24 (expr -> expr NEQ expr .)
+    GT              reduce using rule 24 (expr -> expr NEQ expr .)
+    ]               reduce using rule 24 (expr -> expr NEQ expr .)
+    )               reduce using rule 24 (expr -> expr NEQ expr .)
+    :               reduce using rule 24 (expr -> expr NEQ expr .)
+    {               reduce using rule 24 (expr -> expr NEQ expr .)
+    PRINT           reduce using rule 24 (expr -> expr NEQ expr .)
+    CONTINUE        reduce using rule 24 (expr -> expr NEQ expr .)
+    BREAK           reduce using rule 24 (expr -> expr NEQ expr .)
+    IF              reduce using rule 24 (expr -> expr NEQ expr .)
+    FOR             reduce using rule 24 (expr -> expr NEQ expr .)
+    WHILE           reduce using rule 24 (expr -> expr NEQ expr .)
+    RETURN          reduce using rule 24 (expr -> expr NEQ expr .)
+    ID              reduce using rule 24 (expr -> expr NEQ expr .)
+    EYE             reduce using rule 24 (expr -> expr NEQ expr .)
+    ONES            reduce using rule 24 (expr -> expr NEQ expr .)
+    ZEROS           reduce using rule 24 (expr -> expr NEQ expr .)
+    [               reduce using rule 24 (expr -> expr NEQ expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 94
+
+    (25) expr -> expr EQ expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 25 (expr -> expr EQ expr .)
+    ;               reduce using rule 25 (expr -> expr EQ expr .)
+    NEQ             reduce using rule 25 (expr -> expr EQ expr .)
+    EQ              reduce using rule 25 (expr -> expr EQ expr .)
+    LE              reduce using rule 25 (expr -> expr EQ expr .)
+    GE              reduce using rule 25 (expr -> expr EQ expr .)
+    LT              reduce using rule 25 (expr -> expr EQ expr .)
+    GT              reduce using rule 25 (expr -> expr EQ expr .)
+    ]               reduce using rule 25 (expr -> expr EQ expr .)
+    )               reduce using rule 25 (expr -> expr EQ expr .)
+    :               reduce using rule 25 (expr -> expr EQ expr .)
+    {               reduce using rule 25 (expr -> expr EQ expr .)
+    PRINT           reduce using rule 25 (expr -> expr EQ expr .)
+    CONTINUE        reduce using rule 25 (expr -> expr EQ expr .)
+    BREAK           reduce using rule 25 (expr -> expr EQ expr .)
+    IF              reduce using rule 25 (expr -> expr EQ expr .)
+    FOR             reduce using rule 25 (expr -> expr EQ expr .)
+    WHILE           reduce using rule 25 (expr -> expr EQ expr .)
+    RETURN          reduce using rule 25 (expr -> expr EQ expr .)
+    ID              reduce using rule 25 (expr -> expr EQ expr .)
+    EYE             reduce using rule 25 (expr -> expr EQ expr .)
+    ONES            reduce using rule 25 (expr -> expr EQ expr .)
+    ZEROS           reduce using rule 25 (expr -> expr EQ expr .)
+    [               reduce using rule 25 (expr -> expr EQ expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 95
+
+    (26) expr -> expr LE expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 26 (expr -> expr LE expr .)
+    ;               reduce using rule 26 (expr -> expr LE expr .)
+    NEQ             reduce using rule 26 (expr -> expr LE expr .)
+    EQ              reduce using rule 26 (expr -> expr LE expr .)
+    LE              reduce using rule 26 (expr -> expr LE expr .)
+    GE              reduce using rule 26 (expr -> expr LE expr .)
+    LT              reduce using rule 26 (expr -> expr LE expr .)
+    GT              reduce using rule 26 (expr -> expr LE expr .)
+    ]               reduce using rule 26 (expr -> expr LE expr .)
+    )               reduce using rule 26 (expr -> expr LE expr .)
+    :               reduce using rule 26 (expr -> expr LE expr .)
+    {               reduce using rule 26 (expr -> expr LE expr .)
+    PRINT           reduce using rule 26 (expr -> expr LE expr .)
+    CONTINUE        reduce using rule 26 (expr -> expr LE expr .)
+    BREAK           reduce using rule 26 (expr -> expr LE expr .)
+    IF              reduce using rule 26 (expr -> expr LE expr .)
+    FOR             reduce using rule 26 (expr -> expr LE expr .)
+    WHILE           reduce using rule 26 (expr -> expr LE expr .)
+    RETURN          reduce using rule 26 (expr -> expr LE expr .)
+    ID              reduce using rule 26 (expr -> expr LE expr .)
+    EYE             reduce using rule 26 (expr -> expr LE expr .)
+    ONES            reduce using rule 26 (expr -> expr LE expr .)
+    ZEROS           reduce using rule 26 (expr -> expr LE expr .)
+    [               reduce using rule 26 (expr -> expr LE expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 96
+
+    (27) expr -> expr GE expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 27 (expr -> expr GE expr .)
+    ;               reduce using rule 27 (expr -> expr GE expr .)
+    NEQ             reduce using rule 27 (expr -> expr GE expr .)
+    EQ              reduce using rule 27 (expr -> expr GE expr .)
+    LE              reduce using rule 27 (expr -> expr GE expr .)
+    GE              reduce using rule 27 (expr -> expr GE expr .)
+    LT              reduce using rule 27 (expr -> expr GE expr .)
+    GT              reduce using rule 27 (expr -> expr GE expr .)
+    ]               reduce using rule 27 (expr -> expr GE expr .)
+    )               reduce using rule 27 (expr -> expr GE expr .)
+    :               reduce using rule 27 (expr -> expr GE expr .)
+    {               reduce using rule 27 (expr -> expr GE expr .)
+    PRINT           reduce using rule 27 (expr -> expr GE expr .)
+    CONTINUE        reduce using rule 27 (expr -> expr GE expr .)
+    BREAK           reduce using rule 27 (expr -> expr GE expr .)
+    IF              reduce using rule 27 (expr -> expr GE expr .)
+    FOR             reduce using rule 27 (expr -> expr GE expr .)
+    WHILE           reduce using rule 27 (expr -> expr GE expr .)
+    RETURN          reduce using rule 27 (expr -> expr GE expr .)
+    ID              reduce using rule 27 (expr -> expr GE expr .)
+    EYE             reduce using rule 27 (expr -> expr GE expr .)
+    ONES            reduce using rule 27 (expr -> expr GE expr .)
+    ZEROS           reduce using rule 27 (expr -> expr GE expr .)
+    [               reduce using rule 27 (expr -> expr GE expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 97
+
+    (28) expr -> expr LT expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 28 (expr -> expr LT expr .)
+    ;               reduce using rule 28 (expr -> expr LT expr .)
+    NEQ             reduce using rule 28 (expr -> expr LT expr .)
+    EQ              reduce using rule 28 (expr -> expr LT expr .)
+    LE              reduce using rule 28 (expr -> expr LT expr .)
+    GE              reduce using rule 28 (expr -> expr LT expr .)
+    LT              reduce using rule 28 (expr -> expr LT expr .)
+    GT              reduce using rule 28 (expr -> expr LT expr .)
+    ]               reduce using rule 28 (expr -> expr LT expr .)
+    )               reduce using rule 28 (expr -> expr LT expr .)
+    :               reduce using rule 28 (expr -> expr LT expr .)
+    {               reduce using rule 28 (expr -> expr LT expr .)
+    PRINT           reduce using rule 28 (expr -> expr LT expr .)
+    CONTINUE        reduce using rule 28 (expr -> expr LT expr .)
+    BREAK           reduce using rule 28 (expr -> expr LT expr .)
+    IF              reduce using rule 28 (expr -> expr LT expr .)
+    FOR             reduce using rule 28 (expr -> expr LT expr .)
+    WHILE           reduce using rule 28 (expr -> expr LT expr .)
+    RETURN          reduce using rule 28 (expr -> expr LT expr .)
+    ID              reduce using rule 28 (expr -> expr LT expr .)
+    EYE             reduce using rule 28 (expr -> expr LT expr .)
+    ONES            reduce using rule 28 (expr -> expr LT expr .)
+    ZEROS           reduce using rule 28 (expr -> expr LT expr .)
+    [               reduce using rule 28 (expr -> expr LT expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 98
+
+    (29) expr -> expr GT expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 29 (expr -> expr GT expr .)
+    ;               reduce using rule 29 (expr -> expr GT expr .)
+    NEQ             reduce using rule 29 (expr -> expr GT expr .)
+    EQ              reduce using rule 29 (expr -> expr GT expr .)
+    LE              reduce using rule 29 (expr -> expr GT expr .)
+    GE              reduce using rule 29 (expr -> expr GT expr .)
+    LT              reduce using rule 29 (expr -> expr GT expr .)
+    GT              reduce using rule 29 (expr -> expr GT expr .)
+    ]               reduce using rule 29 (expr -> expr GT expr .)
+    )               reduce using rule 29 (expr -> expr GT expr .)
+    :               reduce using rule 29 (expr -> expr GT expr .)
+    {               reduce using rule 29 (expr -> expr GT expr .)
+    PRINT           reduce using rule 29 (expr -> expr GT expr .)
+    CONTINUE        reduce using rule 29 (expr -> expr GT expr .)
+    BREAK           reduce using rule 29 (expr -> expr GT expr .)
+    IF              reduce using rule 29 (expr -> expr GT expr .)
+    FOR             reduce using rule 29 (expr -> expr GT expr .)
+    WHILE           reduce using rule 29 (expr -> expr GT expr .)
+    RETURN          reduce using rule 29 (expr -> expr GT expr .)
+    ID              reduce using rule 29 (expr -> expr GT expr .)
+    EYE             reduce using rule 29 (expr -> expr GT expr .)
+    ONES            reduce using rule 29 (expr -> expr GT expr .)
+    ZEROS           reduce using rule 29 (expr -> expr GT expr .)
+    [               reduce using rule 29 (expr -> expr GT expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 99
+
+    (30) expr -> expr DOTDIV expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    ;               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    NEQ             reduce using rule 30 (expr -> expr DOTDIV expr .)
+    EQ              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    LE              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    GE              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    LT              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    GT              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    DOTDIV          reduce using rule 30 (expr -> expr DOTDIV expr .)
+    DOTTIMES        reduce using rule 30 (expr -> expr DOTDIV expr .)
+    DOTMINUS        reduce using rule 30 (expr -> expr DOTDIV expr .)
+    DOTPLUS         reduce using rule 30 (expr -> expr DOTDIV expr .)
+    /               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    *               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    -               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    +               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    ]               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    )               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    :               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    {               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    PRINT           reduce using rule 30 (expr -> expr DOTDIV expr .)
+    CONTINUE        reduce using rule 30 (expr -> expr DOTDIV expr .)
+    BREAK           reduce using rule 30 (expr -> expr DOTDIV expr .)
+    IF              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    FOR             reduce using rule 30 (expr -> expr DOTDIV expr .)
+    WHILE           reduce using rule 30 (expr -> expr DOTDIV expr .)
+    RETURN          reduce using rule 30 (expr -> expr DOTDIV expr .)
+    ID              reduce using rule 30 (expr -> expr DOTDIV expr .)
+    EYE             reduce using rule 30 (expr -> expr DOTDIV expr .)
+    ONES            reduce using rule 30 (expr -> expr DOTDIV expr .)
+    ZEROS           reduce using rule 30 (expr -> expr DOTDIV expr .)
+    [               reduce using rule 30 (expr -> expr DOTDIV expr .)
+    TRANSPOSE       shift and go to state 59
+
+
+state 100
+
+    (31) expr -> expr DOTTIMES expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    ;               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    NEQ             reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    EQ              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    LE              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    GE              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    LT              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    GT              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    DOTDIV          reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    DOTTIMES        reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    DOTMINUS        reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    DOTPLUS         reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    /               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    *               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    -               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    +               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    ]               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    )               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    :               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    {               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    PRINT           reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    CONTINUE        reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    BREAK           reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    IF              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    FOR             reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    WHILE           reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    RETURN          reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    ID              reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    EYE             reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    ONES            reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    ZEROS           reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    [               reduce using rule 31 (expr -> expr DOTTIMES expr .)
+    TRANSPOSE       shift and go to state 59
+
+
+state 101
+
+    (32) expr -> expr DOTMINUS expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    ;               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    NEQ             reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    EQ              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    LE              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    GE              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    LT              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    GT              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    DOTMINUS        reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    DOTPLUS         reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    -               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    +               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    ]               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    )               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    :               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    {               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    PRINT           reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    CONTINUE        reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    BREAK           reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    IF              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    FOR             reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    WHILE           reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    RETURN          reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    ID              reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    EYE             reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    ONES            reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    ZEROS           reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    [               reduce using rule 32 (expr -> expr DOTMINUS expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    /               shift and go to state 70
+    *               shift and go to state 71
+
+
+state 102
+
+    (33) expr -> expr DOTPLUS expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    ;               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    NEQ             reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    EQ              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    LE              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    GE              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    LT              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    GT              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    DOTMINUS        reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    DOTPLUS         reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    -               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    +               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    ]               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    )               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    :               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    {               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    PRINT           reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    CONTINUE        reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    BREAK           reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    IF              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    FOR             reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    WHILE           reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    RETURN          reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    ID              reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    EYE             reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    ONES            reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    ZEROS           reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    [               reduce using rule 33 (expr -> expr DOTPLUS expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    /               shift and go to state 70
+    *               shift and go to state 71
+
+
+state 103
+
+    (34) expr -> expr / expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 34 (expr -> expr / expr .)
+    ;               reduce using rule 34 (expr -> expr / expr .)
+    NEQ             reduce using rule 34 (expr -> expr / expr .)
+    EQ              reduce using rule 34 (expr -> expr / expr .)
+    LE              reduce using rule 34 (expr -> expr / expr .)
+    GE              reduce using rule 34 (expr -> expr / expr .)
+    LT              reduce using rule 34 (expr -> expr / expr .)
+    GT              reduce using rule 34 (expr -> expr / expr .)
+    DOTDIV          reduce using rule 34 (expr -> expr / expr .)
+    DOTTIMES        reduce using rule 34 (expr -> expr / expr .)
+    DOTMINUS        reduce using rule 34 (expr -> expr / expr .)
+    DOTPLUS         reduce using rule 34 (expr -> expr / expr .)
+    /               reduce using rule 34 (expr -> expr / expr .)
+    *               reduce using rule 34 (expr -> expr / expr .)
+    -               reduce using rule 34 (expr -> expr / expr .)
+    +               reduce using rule 34 (expr -> expr / expr .)
+    ]               reduce using rule 34 (expr -> expr / expr .)
+    )               reduce using rule 34 (expr -> expr / expr .)
+    :               reduce using rule 34 (expr -> expr / expr .)
+    {               reduce using rule 34 (expr -> expr / expr .)
+    PRINT           reduce using rule 34 (expr -> expr / expr .)
+    CONTINUE        reduce using rule 34 (expr -> expr / expr .)
+    BREAK           reduce using rule 34 (expr -> expr / expr .)
+    IF              reduce using rule 34 (expr -> expr / expr .)
+    FOR             reduce using rule 34 (expr -> expr / expr .)
+    WHILE           reduce using rule 34 (expr -> expr / expr .)
+    RETURN          reduce using rule 34 (expr -> expr / expr .)
+    ID              reduce using rule 34 (expr -> expr / expr .)
+    EYE             reduce using rule 34 (expr -> expr / expr .)
+    ONES            reduce using rule 34 (expr -> expr / expr .)
+    ZEROS           reduce using rule 34 (expr -> expr / expr .)
+    [               reduce using rule 34 (expr -> expr / expr .)
+    TRANSPOSE       shift and go to state 59
+
+
+state 104
+
+    (35) expr -> expr * expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 35 (expr -> expr * expr .)
+    ;               reduce using rule 35 (expr -> expr * expr .)
+    NEQ             reduce using rule 35 (expr -> expr * expr .)
+    EQ              reduce using rule 35 (expr -> expr * expr .)
+    LE              reduce using rule 35 (expr -> expr * expr .)
+    GE              reduce using rule 35 (expr -> expr * expr .)
+    LT              reduce using rule 35 (expr -> expr * expr .)
+    GT              reduce using rule 35 (expr -> expr * expr .)
+    DOTDIV          reduce using rule 35 (expr -> expr * expr .)
+    DOTTIMES        reduce using rule 35 (expr -> expr * expr .)
+    DOTMINUS        reduce using rule 35 (expr -> expr * expr .)
+    DOTPLUS         reduce using rule 35 (expr -> expr * expr .)
+    /               reduce using rule 35 (expr -> expr * expr .)
+    *               reduce using rule 35 (expr -> expr * expr .)
+    -               reduce using rule 35 (expr -> expr * expr .)
+    +               reduce using rule 35 (expr -> expr * expr .)
+    ]               reduce using rule 35 (expr -> expr * expr .)
+    )               reduce using rule 35 (expr -> expr * expr .)
+    :               reduce using rule 35 (expr -> expr * expr .)
+    {               reduce using rule 35 (expr -> expr * expr .)
+    PRINT           reduce using rule 35 (expr -> expr * expr .)
+    CONTINUE        reduce using rule 35 (expr -> expr * expr .)
+    BREAK           reduce using rule 35 (expr -> expr * expr .)
+    IF              reduce using rule 35 (expr -> expr * expr .)
+    FOR             reduce using rule 35 (expr -> expr * expr .)
+    WHILE           reduce using rule 35 (expr -> expr * expr .)
+    RETURN          reduce using rule 35 (expr -> expr * expr .)
+    ID              reduce using rule 35 (expr -> expr * expr .)
+    EYE             reduce using rule 35 (expr -> expr * expr .)
+    ONES            reduce using rule 35 (expr -> expr * expr .)
+    ZEROS           reduce using rule 35 (expr -> expr * expr .)
+    [               reduce using rule 35 (expr -> expr * expr .)
+    TRANSPOSE       shift and go to state 59
+
+
+state 105
+
+    (36) expr -> expr - expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 36 (expr -> expr - expr .)
+    ;               reduce using rule 36 (expr -> expr - expr .)
+    NEQ             reduce using rule 36 (expr -> expr - expr .)
+    EQ              reduce using rule 36 (expr -> expr - expr .)
+    LE              reduce using rule 36 (expr -> expr - expr .)
+    GE              reduce using rule 36 (expr -> expr - expr .)
+    LT              reduce using rule 36 (expr -> expr - expr .)
+    GT              reduce using rule 36 (expr -> expr - expr .)
+    DOTMINUS        reduce using rule 36 (expr -> expr - expr .)
+    DOTPLUS         reduce using rule 36 (expr -> expr - expr .)
+    -               reduce using rule 36 (expr -> expr - expr .)
+    +               reduce using rule 36 (expr -> expr - expr .)
+    ]               reduce using rule 36 (expr -> expr - expr .)
+    )               reduce using rule 36 (expr -> expr - expr .)
+    :               reduce using rule 36 (expr -> expr - expr .)
+    {               reduce using rule 36 (expr -> expr - expr .)
+    PRINT           reduce using rule 36 (expr -> expr - expr .)
+    CONTINUE        reduce using rule 36 (expr -> expr - expr .)
+    BREAK           reduce using rule 36 (expr -> expr - expr .)
+    IF              reduce using rule 36 (expr -> expr - expr .)
+    FOR             reduce using rule 36 (expr -> expr - expr .)
+    WHILE           reduce using rule 36 (expr -> expr - expr .)
+    RETURN          reduce using rule 36 (expr -> expr - expr .)
+    ID              reduce using rule 36 (expr -> expr - expr .)
+    EYE             reduce using rule 36 (expr -> expr - expr .)
+    ONES            reduce using rule 36 (expr -> expr - expr .)
+    ZEROS           reduce using rule 36 (expr -> expr - expr .)
+    [               reduce using rule 36 (expr -> expr - expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    /               shift and go to state 70
+    *               shift and go to state 71
+
+
+state 106
+
+    (37) expr -> expr + expr .
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ,               reduce using rule 37 (expr -> expr + expr .)
+    ;               reduce using rule 37 (expr -> expr + expr .)
+    NEQ             reduce using rule 37 (expr -> expr + expr .)
+    EQ              reduce using rule 37 (expr -> expr + expr .)
+    LE              reduce using rule 37 (expr -> expr + expr .)
+    GE              reduce using rule 37 (expr -> expr + expr .)
+    LT              reduce using rule 37 (expr -> expr + expr .)
+    GT              reduce using rule 37 (expr -> expr + expr .)
+    DOTMINUS        reduce using rule 37 (expr -> expr + expr .)
+    DOTPLUS         reduce using rule 37 (expr -> expr + expr .)
+    -               reduce using rule 37 (expr -> expr + expr .)
+    +               reduce using rule 37 (expr -> expr + expr .)
+    ]               reduce using rule 37 (expr -> expr + expr .)
+    )               reduce using rule 37 (expr -> expr + expr .)
+    :               reduce using rule 37 (expr -> expr + expr .)
+    {               reduce using rule 37 (expr -> expr + expr .)
+    PRINT           reduce using rule 37 (expr -> expr + expr .)
+    CONTINUE        reduce using rule 37 (expr -> expr + expr .)
+    BREAK           reduce using rule 37 (expr -> expr + expr .)
+    IF              reduce using rule 37 (expr -> expr + expr .)
+    FOR             reduce using rule 37 (expr -> expr + expr .)
+    WHILE           reduce using rule 37 (expr -> expr + expr .)
+    RETURN          reduce using rule 37 (expr -> expr + expr .)
+    ID              reduce using rule 37 (expr -> expr + expr .)
+    EYE             reduce using rule 37 (expr -> expr + expr .)
+    ONES            reduce using rule 37 (expr -> expr + expr .)
+    ZEROS           reduce using rule 37 (expr -> expr + expr .)
+    [               reduce using rule 37 (expr -> expr + expr .)
+    TRANSPOSE       shift and go to state 59
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    /               shift and go to state 70
+    *               shift and go to state 71
+
+
+state 107
+
+    (18) expr -> ( expr ) .
+    ,               reduce using rule 18 (expr -> ( expr ) .)
+    ;               reduce using rule 18 (expr -> ( expr ) .)
+    TRANSPOSE       reduce using rule 18 (expr -> ( expr ) .)
+    NEQ             reduce using rule 18 (expr -> ( expr ) .)
+    EQ              reduce using rule 18 (expr -> ( expr ) .)
+    LE              reduce using rule 18 (expr -> ( expr ) .)
+    GE              reduce using rule 18 (expr -> ( expr ) .)
+    LT              reduce using rule 18 (expr -> ( expr ) .)
+    GT              reduce using rule 18 (expr -> ( expr ) .)
+    DOTDIV          reduce using rule 18 (expr -> ( expr ) .)
+    DOTTIMES        reduce using rule 18 (expr -> ( expr ) .)
+    DOTMINUS        reduce using rule 18 (expr -> ( expr ) .)
+    DOTPLUS         reduce using rule 18 (expr -> ( expr ) .)
+    /               reduce using rule 18 (expr -> ( expr ) .)
+    *               reduce using rule 18 (expr -> ( expr ) .)
+    -               reduce using rule 18 (expr -> ( expr ) .)
+    +               reduce using rule 18 (expr -> ( expr ) .)
+    ]               reduce using rule 18 (expr -> ( expr ) .)
+    )               reduce using rule 18 (expr -> ( expr ) .)
+    :               reduce using rule 18 (expr -> ( expr ) .)
+    {               reduce using rule 18 (expr -> ( expr ) .)
+    PRINT           reduce using rule 18 (expr -> ( expr ) .)
+    CONTINUE        reduce using rule 18 (expr -> ( expr ) .)
+    BREAK           reduce using rule 18 (expr -> ( expr ) .)
+    IF              reduce using rule 18 (expr -> ( expr ) .)
+    FOR             reduce using rule 18 (expr -> ( expr ) .)
+    WHILE           reduce using rule 18 (expr -> ( expr ) .)
+    RETURN          reduce using rule 18 (expr -> ( expr ) .)
+    ID              reduce using rule 18 (expr -> ( expr ) .)
+    EYE             reduce using rule 18 (expr -> ( expr ) .)
+    ONES            reduce using rule 18 (expr -> ( expr ) .)
+    ZEROS           reduce using rule 18 (expr -> ( expr ) .)
+    [               reduce using rule 18 (expr -> ( expr ) .)
+
+
+state 108
+
+    (48) if_i -> IF ( expr ) . instruction ELSE instruction
+    (49) if_i -> IF ( expr ) . instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instruction                    shift and go to state 119
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 109
+
+    (53) for_l -> FOR ID = expr . : expr instruction
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    :               shift and go to state 120
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 110
+
+    (38) tab -> ID [ expr , . expr ]
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 121
+    matrix                         shift and go to state 30
+
+state 111
+
+    (39) tab -> ID [ expr ] .
+    DIVASSIGN       reduce using rule 39 (tab -> ID [ expr ] .)
+    TIMESASSIGN     reduce using rule 39 (tab -> ID [ expr ] .)
+    MINUSASSIGN     reduce using rule 39 (tab -> ID [ expr ] .)
+    PLUSASSIGN      reduce using rule 39 (tab -> ID [ expr ] .)
+    =               reduce using rule 39 (tab -> ID [ expr ] .)
+
+
+state 112
+
+    (52) while_l -> WHILE ( expr ) . instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instruction                    shift and go to state 122
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 113
+
+    (40) matrix -> EYE ( INTNUM ) .
+    DIVASSIGN       reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    TIMESASSIGN     reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    MINUSASSIGN     reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    PLUSASSIGN      reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    =               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    ,               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    ;               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    TRANSPOSE       reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    NEQ             reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    EQ              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    LE              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    GE              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    LT              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    GT              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    DOTDIV          reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    DOTTIMES        reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    DOTMINUS        reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    DOTPLUS         reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    /               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    *               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    -               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    +               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    ]               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    )               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    :               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    {               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    PRINT           reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    CONTINUE        reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    BREAK           reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    IF              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    FOR             reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    WHILE           reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    RETURN          reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    ID              reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    EYE             reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    ONES            reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    ZEROS           reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+    [               reduce using rule 40 (matrix -> EYE ( INTNUM ) .)
+
+
+state 114
+
+    (41) matrix -> ONES ( INTNUM ) .
+    DIVASSIGN       reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    TIMESASSIGN     reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    MINUSASSIGN     reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    PLUSASSIGN      reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    =               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    ,               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    ;               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    TRANSPOSE       reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    NEQ             reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    EQ              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    LE              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    GE              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    LT              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    GT              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    DOTDIV          reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    DOTTIMES        reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    DOTMINUS        reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    DOTPLUS         reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    /               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    *               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    -               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    +               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    ]               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    )               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    :               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    {               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    PRINT           reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    CONTINUE        reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    BREAK           reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    IF              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    FOR             reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    WHILE           reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    RETURN          reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    ID              reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    EYE             reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    ONES            reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    ZEROS           reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+    [               reduce using rule 41 (matrix -> ONES ( INTNUM ) .)
+
+
+state 115
+
+    (42) matrix -> ZEROS ( INTNUM ) .
+    DIVASSIGN       reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    TIMESASSIGN     reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    MINUSASSIGN     reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    PLUSASSIGN      reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    =               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    ,               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    ;               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    TRANSPOSE       reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    NEQ             reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    EQ              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    LE              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    GE              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    LT              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    GT              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    DOTDIV          reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    DOTTIMES        reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    DOTMINUS        reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    DOTPLUS         reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    /               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    *               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    -               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    +               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    ]               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    )               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    :               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    {               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    PRINT           reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    CONTINUE        reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    BREAK           reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    IF              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    FOR             reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    WHILE           reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    RETURN          reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    ID              reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    EYE             reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    ONES            reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    ZEROS           reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+    [               reduce using rule 42 (matrix -> ZEROS ( INTNUM ) .)
+
+
+state 116
+
+    (45) lists -> list ; lists .
+    ]               reduce using rule 45 (lists -> list ; lists .)
+
+
+state 117
+
+    (47) list -> expr , list .
+    ;               reduce using rule 47 (list -> expr , list .)
+    ]               reduce using rule 47 (list -> expr , list .)
+
+
+state 118
+
+    (8) instruction -> PRINT expr , expr ; .
+    {               reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    PRINT           reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    CONTINUE        reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    BREAK           reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    IF              reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    FOR             reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    WHILE           reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    RETURN          reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    ID              reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    EYE             reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    ONES            reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    ZEROS           reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    [               reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    $end            reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    }               reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+    ELSE            reduce using rule 8 (instruction -> PRINT expr , expr ; .)
+
+
+state 119
+
+    (48) if_i -> IF ( expr ) instruction . ELSE instruction
+    (49) if_i -> IF ( expr ) instruction .
+    ELSE            shift and go to state 123
+    {               reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    PRINT           reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    CONTINUE        reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    BREAK           reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    IF              reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    FOR             reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    WHILE           reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    RETURN          reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    ID              reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    EYE             reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    ONES            reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    ZEROS           reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    [               reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    $end            reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+    }               reduce using rule 49 (if_i -> IF ( expr ) instruction .)
+
+
+state 120
+
+    (53) for_l -> FOR ID = expr : . expr instruction
+    (16) expr -> . matrix
+    (17) expr -> . - expr
+    (18) expr -> . ( expr )
+    (19) expr -> . ID
+    (20) expr -> . STRING
+    (21) expr -> . FLOATNUM
+    (22) expr -> . INTNUM
+    (23) expr -> . expr TRANSPOSE
+    (24) expr -> . expr NEQ expr
+    (25) expr -> . expr EQ expr
+    (26) expr -> . expr LE expr
+    (27) expr -> . expr GE expr
+    (28) expr -> . expr LT expr
+    (29) expr -> . expr GT expr
+    (30) expr -> . expr DOTDIV expr
+    (31) expr -> . expr DOTTIMES expr
+    (32) expr -> . expr DOTMINUS expr
+    (33) expr -> . expr DOTPLUS expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr - expr
+    (37) expr -> . expr + expr
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    -               shift and go to state 31
+    (               shift and go to state 32
+    ID              shift and go to state 33
+    STRING          shift and go to state 34
+    FLOATNUM        shift and go to state 35
+    INTNUM          shift and go to state 36
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    expr                           shift and go to state 124
+    matrix                         shift and go to state 30
+
+state 121
+
+    (38) tab -> ID [ expr , expr . ]
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    ]               shift and go to state 125
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+
+
+state 122
+
+    (52) while_l -> WHILE ( expr ) instruction .
+    {               reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    PRINT           reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    CONTINUE        reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    BREAK           reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    IF              reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    FOR             reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    WHILE           reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    RETURN          reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    ID              reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    EYE             reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    ONES            reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    ZEROS           reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    [               reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    $end            reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    }               reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+    ELSE            reduce using rule 52 (while_l -> WHILE ( expr ) instruction .)
+
+
+state 123
+
+    (48) if_i -> IF ( expr ) instruction ELSE . instruction
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instruction                    shift and go to state 126
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 124
+
+    (53) for_l -> FOR ID = expr : expr . instruction
+    (23) expr -> expr . TRANSPOSE
+    (24) expr -> expr . NEQ expr
+    (25) expr -> expr . EQ expr
+    (26) expr -> expr . LE expr
+    (27) expr -> expr . GE expr
+    (28) expr -> expr . LT expr
+    (29) expr -> expr . GT expr
+    (30) expr -> expr . DOTDIV expr
+    (31) expr -> expr . DOTTIMES expr
+    (32) expr -> expr . DOTMINUS expr
+    (33) expr -> expr . DOTPLUS expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . - expr
+    (37) expr -> expr . + expr
+    (6) instruction -> . { instructions }
+    (7) instruction -> . assign ;
+    (8) instruction -> . PRINT expr , expr ;
+    (9) instruction -> . PRINT expr ;
+    (10) instruction -> . if_i
+    (11) instruction -> . for_l
+    (12) instruction -> . while_l
+    (13) instruction -> . return_i
+    (14) instruction -> . CONTINUE ;
+    (15) instruction -> . BREAK ;
+    (57) assign -> . value DIVASSIGN expr
+    (58) assign -> . value TIMESASSIGN expr
+    (59) assign -> . value MINUSASSIGN expr
+    (60) assign -> . value PLUSASSIGN expr
+    (61) assign -> . value = expr
+    (48) if_i -> . IF ( expr ) instruction ELSE instruction
+    (49) if_i -> . IF ( expr ) instruction
+    (53) for_l -> . FOR ID = expr : expr instruction
+    (52) while_l -> . WHILE ( expr ) instruction
+    (50) return_i -> . RETURN expr ;
+    (51) return_i -> . RETURN ;
+    (54) value -> . matrix
+    (55) value -> . tab
+    (56) value -> . ID
+    (40) matrix -> . EYE ( INTNUM )
+    (41) matrix -> . ONES ( INTNUM )
+    (42) matrix -> . ZEROS ( INTNUM )
+    (43) matrix -> . [ lists ]
+    (38) tab -> . ID [ expr , expr ]
+    (39) tab -> . ID [ expr ]
+    TRANSPOSE       shift and go to state 59
+    NEQ             shift and go to state 60
+    EQ              shift and go to state 61
+    LE              shift and go to state 62
+    GE              shift and go to state 63
+    LT              shift and go to state 64
+    GT              shift and go to state 65
+    DOTDIV          shift and go to state 66
+    DOTTIMES        shift and go to state 67
+    DOTMINUS        shift and go to state 68
+    DOTPLUS         shift and go to state 69
+    /               shift and go to state 70
+    *               shift and go to state 71
+    -               shift and go to state 72
+    +               shift and go to state 73
+    {               shift and go to state 5
+    PRINT           shift and go to state 7
+    CONTINUE        shift and go to state 12
+    BREAK           shift and go to state 13
+    IF              shift and go to state 15
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 18
+    RETURN          shift and go to state 19
+    ID              shift and go to state 17
+    EYE             shift and go to state 22
+    ONES            shift and go to state 23
+    ZEROS           shift and go to state 24
+    [               shift and go to state 25
+
+    instruction                    shift and go to state 127
+    assign                         shift and go to state 6
+    if_i                           shift and go to state 8
+    for_l                          shift and go to state 9
+    while_l                        shift and go to state 10
+    return_i                       shift and go to state 11
+    value                          shift and go to state 14
+    matrix                         shift and go to state 20
+    tab                            shift and go to state 21
+
+state 125
+
+    (38) tab -> ID [ expr , expr ] .
+    DIVASSIGN       reduce using rule 38 (tab -> ID [ expr , expr ] .)
+    TIMESASSIGN     reduce using rule 38 (tab -> ID [ expr , expr ] .)
+    MINUSASSIGN     reduce using rule 38 (tab -> ID [ expr , expr ] .)
+    PLUSASSIGN      reduce using rule 38 (tab -> ID [ expr , expr ] .)
+    =               reduce using rule 38 (tab -> ID [ expr , expr ] .)
+
+
+state 126
+
+    (48) if_i -> IF ( expr ) instruction ELSE instruction .
+    {               reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    PRINT           reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    CONTINUE        reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    BREAK           reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    IF              reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    FOR             reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    WHILE           reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    RETURN          reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    ID              reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    EYE             reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    ONES            reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    ZEROS           reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    [               reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    $end            reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    }               reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+    ELSE            reduce using rule 48 (if_i -> IF ( expr ) instruction ELSE instruction .)
+
+
+state 127
+
+    (53) for_l -> FOR ID = expr : expr instruction .
+    {               reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    PRINT           reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    CONTINUE        reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    BREAK           reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    IF              reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    FOR             reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    WHILE           reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    RETURN          reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    ID              reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    EYE             reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    ONES            reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    ZEROS           reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    [               reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    $end            reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    }               reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
+    ELSE            reduce using rule 53 (for_l -> FOR ID = expr : expr instruction .)
