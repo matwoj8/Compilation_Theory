@@ -85,6 +85,10 @@ class Assignment(Node):
     def __init__(self, value, operator, expr, lineno = None):
         super().__init__(value = value, operator = operator, expr = expr, lineno = lineno)      
 
+class Block(Node):
+    def __init__(self, instructions, lineno=None):
+        super().__init__(instructions=instructions, lineno=lineno)
+
 class Error(Node):
     def __init__(self):
         pass

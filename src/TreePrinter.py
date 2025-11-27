@@ -3,7 +3,7 @@ import AST
 def addToClass(cls):
 
     def decorator(func):
-        print("DODAJĘ", func.__name__, "DO", cls)
+        # print("DODAJĘ", func.__name__, "DO", cls)
         setattr(cls,func.__name__,func)
         return func
     return decorator
@@ -27,22 +27,22 @@ class TreePrinter:
     @addToClass(AST.IntNum)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"INTNUM: {self.intnum}")
+        print(self.intnum)
 
     @addToClass(AST.StringNum)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"STRING: {self.stringnum}")
+        print(self.stringnum)
 
     @addToClass(AST.FloatNum)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"FLOATNUM: {self.floatnum}")
+        print(self.floatnum)
 
     @addToClass(AST.IDNum)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"ID: {self.id}")
+        print(self.id)
     
     @addToClass(AST.BreakStatement)
     def printTree(self, indent=0):
@@ -67,20 +67,20 @@ class TreePrinter:
     @addToClass(AST.BinaryExpression)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"BINARYEXPR: {self.operator}")
+        print(self.operator)
         self.leftexpr.printTree(indent + 1)
         self.rightexpr.printTree(indent + 1)
 
     @addToClass(AST.UnaryExpression)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"UNARYEXPR: {self.operator}")
+        print(self.operator)
         self.expr.printTree(indent + 1)
 
     @addToClass(AST.IdTab)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"IDTAB: {self.id}")
+        print(self.id)
         self.firstexpr.printTree(indent + 1)
         if self.secondexpr:
             self.secondexpr.printTree(indent + 1)
@@ -98,18 +98,55 @@ class TreePrinter:
     @addToClass(AST.MatFun)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print(f"MATFUN: {self.function}")
+        print(self.function)
         self.intnum.printTree(indent + 1)
 
     @addToClass(AST.Assignment)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print("ASSIGN")
+        print(self.operator)
         self.value.printTree(indent + 1)
         self.expr.printTree(indent + 1)
 
-    
+    @addToClass(AST.IfStatement)
+    def printTree(self, indent=0):
+        self.indentation(indent)
+        print("IF")
+        self.expr.printTree(indent + 1)
+        self.firstinstruction.printTree(indent + 1)
+        if self.secondinstruction:
+            self.indentation(indent)
+            print("ELSE")
+            self.secondinstruction.printTree(indent + 1)
 
+    @addToClass(AST.ReturnStatement)
+    def printTree(self, indent=0):
+        self.indentation(indent)
+        print("RETURN")
+        if self.expr:
+            self.expr.printTree(indent + 1)
+
+    @addToClass(AST.ForLoop)
+    def printTree(self, indent=0):
+        self.indentation(indent)
+        print("FOR")
+        self.id.printTree(indent + 1)
+        self.firstexpr.printTree(indent + 1)
+        self.secondexpr.printTree(indent + 1)
+        self.instruction.printTree(indent + 1)
+
+    @addToClass(AST.WhileLoop)
+    def printTree(self, indent=0):
+        self.indentation(indent)
+        print("WHILE")
+        self.expr.printTree(indent + 1)
+        self.instruction.printTree(indent + 1)
+
+    
+    @addToClass(AST.Block)
+    def printTree(self, indent=0):
+        for instr in self.instructions:
+            instr.printTree(indent)
     
 
 

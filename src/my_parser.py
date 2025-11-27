@@ -68,10 +68,9 @@ class Mparser(Parser):
         return PrintStatement([p[1], p[3]], lineno=p.lineno)
         
 
-    @_('"{" instructions "}"')
+    @_('"{" instructions "}"') # musi tu zwracac blok instrukcji, teraz zwracal liste i  sie jebie
     def instruction(self, p):
-        return p[1]
-        #return Block(p[1], lineno=p.lineno)
+        return Block(p[1], lineno=p.lineno)
 
 
 
@@ -154,7 +153,7 @@ class Mparser(Parser):
 
     @_('mat_fun "(" INTNUM ")"')
     def matrix(self, p):
-        return MatFun(p[0] , p[2], lineno = p.lineno)
+        return MatFun(p[0] , IDNum(p[2], lineno = p.lineno), lineno=p.lineno)
 
     
     @_('ZEROS',
@@ -183,10 +182,13 @@ class Mparser(Parser):
     
     @_('FOR ID "=" expr ":" expr instruction')
     def for_l(self, p):
-        return ForLoop(p[1], p[3], p[5], p[6], lineno=p.lineno)
+        return ForLoop(IDNum(p[1], lineno=p.lineno), p[3], p[5], p[6], lineno=p.lineno)
+    
+    @_('ID')
+    def value(self, p):
+        return IDNum(p[0], lineno=p.lineno)
 
-    @_('ID',
-    'tab',
+    @_('tab',
     'matrix')
     def value(self, p):
         return p[0]
