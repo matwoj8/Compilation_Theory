@@ -68,7 +68,7 @@ class Mparser(Parser):
         return PrintStatement([p[1], p[3]], lineno=p.lineno)
         
 
-    @_('"{" instructions "}"') # musi tu zwracac blok instrukcji, teraz zwracal liste i  sie jebie
+    @_('"{" instructions "}"') # musi tu zwracac blok instrukcji, teraz zwracal liste
     def instruction(self, p):
         return Block(p[1], lineno=p.lineno)
 

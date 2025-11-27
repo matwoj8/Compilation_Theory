@@ -88,10 +88,10 @@ class TreePrinter:
     @addToClass(AST.Matrix)
     def printTree(self, indent=0):
         self.indentation(indent)
-        print("MATRIX")
+        print("VECTOR")
         for row in self.matrix:
             self.indentation(indent + 1)
-            print("ROW")
+            print("VECTOR")
             for elem in row:
                 elem.printTree(indent + 2)
 
