@@ -1,6 +1,8 @@
 import sys
 from my_scanner import Scanner
 from my_parser import Mparser
+import AST
+from TreePrinter import TreePrinter
 
 
 if __name__ == '__main__':
