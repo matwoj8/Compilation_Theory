@@ -59,13 +59,10 @@ class Mparser(Parser):
     def instruction(self, p):
         return ContinueStatement(lineno=p.lineno)
     
-    @_('PRINT expr ";"')
+    @_('PRINT list ";"')
     def instruction(self, p):
         return PrintStatement(p[1], lineno=p.lineno)
-    
-    @_('PRINT expr "," expr ";"')
-    def instruction(self, p):
-        return PrintStatement([p[1], p[3]], lineno=p.lineno)
+
         
 
     @_('"{" instructions "}"') # musi tu zwracac blok instrukcji, teraz zwracal liste
