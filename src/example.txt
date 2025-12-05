@@ -20,3 +20,5 @@ if (m==n) {
     if (m >= n) 
         print res;
 }
+
+print 2,1,3,res;
