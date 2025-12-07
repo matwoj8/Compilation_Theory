@@ -1,23 +1,31 @@
 #!/usr/bin/python
 
+class Symbol(object):
+    def __init__(self, name, type=None):
+        self.name = name
+        self.type = type
 
-# class VariableSymbol(Symbol):
+    def getType(self):
+        return self.type
 
-#     def __init__(self, name, type):
-#         pass
-#     #
 
+class VariableSymbol(Symbol):
+
+    def __init__(self, name, type):
+        super().__init__(name, type)
+
+
+class FunctionSymbol(Symbol):
+    def __init__(self, name, return_type, param_types):
+        super().__init__(name, return_type)
+        self.param_types = param_types
 
 class SymbolTable(object):
 
-    def __init__(self, parent, name): # parent scope and symbol table name
+    def __init__(self, name, parent=None): # parent scope and symbol table name
         self.parent = parent
         self.name = name
         self.symbols = {}
-        if parent is None:
-            self.scopes = []
-        else:
-            self.scopes = parent
 
     def put(self, name, symbol): # put variable symbol or fundef under <name> entry
         self.symbols[name] = symbol
@@ -26,6 +34,9 @@ class SymbolTable(object):
     def get(self, name): # get variable symbol or fundef from <name> entry
         if name in self.symbols:
             return self.symbols[name]
+        
+        elif self.parent is not None:
+            return self.parent.get(name)
         
         else:
             return None
@@ -36,10 +47,10 @@ class SymbolTable(object):
     #
 
     def pushScope(self, name):
-        self.scopes.append(name)
+        return SymbolTable(name, self)
 
     def popScope(self):
-        return self.scopes.pop()
+        pass
     #
 
 

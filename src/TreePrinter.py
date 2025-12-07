@@ -58,11 +58,8 @@ class TreePrinter:
     def printTree(self, indent=0):
         self.indentation(indent)
         print("PRINT")
-        if isinstance(self.printargs, list):
-            for arg in self.printargs:
-                arg.printTree(indent + 1)
-        else:
-            self.printargs.printTree(indent + 1)
+        for arg in self.printargs:
+            arg.printTree(indent + 1)
 
     @addToClass(AST.BinaryExpression)
     def printTree(self, indent=0):

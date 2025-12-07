@@ -1,5 +1,6 @@
-#!/usr/bin/python
-
+from SymbolTable import *
+from AST import Node
+import AST
 
 
 class NodeVisitor(object):
@@ -38,7 +39,17 @@ class TypeChecker(NodeVisitor):
     def __init__(self):
         self.operations = ['=', '+=', '-=', '*=', '/=', '>', '<', '>=', '<=', '==', '!=',
                             '+', '-','.+', '.-', '*', '/', '.*', './']
-        self.current_scope = None # todo
+        self.global_scope = SymbolTable("global")
+        self.current_scope = self.global_scope
+        self.loop_depth = 0
+
+    def _is_matrix_type(self, t):
+        return isinstance(t, str) and t.startswith("matrix<") and t.endswith(">")
+    
+    def _matrix_elem_type(self, t):
+        if self._is_matrix_type(t):
+            return t[len("matrix<"):-1]
+        return None
 
     def visit_InstructionOrEmpty(self, node):
         self.visit(node.instructions)
@@ -48,14 +59,12 @@ class TypeChecker(NodeVisitor):
             self.visit(instruction)
 
     def visit_BreakStatement(self, node):
-        if not self.in_loop:
-            if self.loop_depth == 0:
-                print(f"ERROR: 'break' used outside of a loop at line {node.line}")
+        if self.loop_depth == 0:
+            raise SyntaxError(f"Line {node.lineno}: 'break' used outside of a loop.")
 
     def visit_ContinueStatement(self, node):
-        if not self.in_loop:
-            if self.loop_depth == 0:
-                print(f"ERROR: 'continue' used outside of a loop at line {node.line}")
+        if self.loop_depth == 0:
+            raise SyntaxError(f"Line {node.lineno}: 'continue' used outside of a loop.")
 
     def visit_PrintStatement(self, node):
         for arg in node.printargs:
@@ -66,22 +75,66 @@ class TypeChecker(NodeVisitor):
         type1 = self.visit(node.leftexpr)     
         type2 = self.visit(node.rightexpr)    
         op = node.operator
-        if type1 is not type2: print(f"ERROR: types in BinExpr differ: {type1} and {type2}.")
-        if op not in self.operations: print(f"ERROR: {op} is not an accepable expression.")
-        if op in ['!=', '==', '>', '<', '>=', '<=']: return "bool"
-        if op in ['+', '-', '*', '/'] and type1 in ['int', 'float', 'str']: return type1
-        if op in ['.+', '.-', '*', '/', '.*', './'] and type1 == 'matrix': return type1
-        return None
- 
+
+        if op not in self.operations: print(f"ERROR: {op} is not an acceptable expression.")
+
+        if type1 == 'str' or type2 == 'str':
+            if type1 == 'str' and type2 == 'str':
+                if op == '+':
+                    return 'str'
+                else:
+                    raise TypeError(f"Line {node.lineno}: Can't use operator {op} with strings.")
+            else:
+                raise TypeError(f"Line {node.lineno}: Can't mix string with non-string using {op}.")
+
+        if op in ['.+', '.-', '.*', './', '.*', './']:
+            if self._is_matrix_type(type1) and self._is_matrix_type(type2):
+                e1 = self._matrix_elem_type(type1)
+                e2 = self._matrix_elem_type(type2)
+                if e1 != e2:
+                    raise TypeError(f"Line {node.lineno}: Matrix element types differ: {e1} vs {e2}.")
+                return type1  # matrix<elem>
+            else:
+                raise TypeError(f"Line {node.lineno}: Matrix operator {op} requires both operands to be matrices.")
+
+        if op in ['!=', '==', '>', '<', '>=', '<=']:
+            if (type1 in ('int','float') and type2 in ('int','float')) or type1 == type2:
+                return 'bool'
+            else:
+                raise TypeError(f"Line {node.lineno}: Can't compare types {type1} and {type2} with {op}.")
+
+        numeric_ops = ['+', '-', '*', '/']
+        if op in numeric_ops:
+            if type1 in ('int', 'float') and type2 in ('int','float'):
+                if type1 == 'float' or type2 == 'float':
+                    return 'float'
+                else:
+                    return 'int'
+            else:
+                raise TypeError(f"Line {node.lineno}: Operator {op} requires numeric operands, got {type1} and {type2}.")
+
+        raise TypeError(f"Line {node.lineno}: Unsupported binary operation {op} for types {type1}, {type2}.")
+
 
     def visit_UnaryExpression(self, node):
-        if node.operator in ['UMINUS', 'TRANSPOSE']: return self.visit(node.expr)
-        else: raise ValueError(f"Unsupported unary operator: {node.operator}")
+        type_expr = self.visit(node.expr)
+        if node.operator == 'UMINUS':
+            if type_expr in ['int', 'float'] or self._is_matrix_type(type_expr):
+                return type_expr
+            else:
+                raise TypeError(f"Line {node.lineno}: Can't use operator {node.operator} with type {type_expr}.")
+
+        elif node.operator == 'TRANSPOSE':
+            if self._is_matrix_type(type_expr):
+                return type_expr
+            else:
+                raise TypeError(f"Line {node.lineno}: Can't use operator {node.operator} with type {type_expr}.")
+
+        else: raise ValueError(f"Line {node.lineno}: Unsupported unary operator: {node.operator}")
 
     def visit_IdTab(self, node):
-        if node.id != 'id': raise ValueError(f"Unsupported id: {node.id}")
-        else: 
-            self.visit(node.firstexpr)
+        self.visit(node.firstexpr)
+        if node.secondexpr:
             self.visit(node.secondexpr)
 
     def visit_IntNum(self, node):
@@ -94,7 +147,7 @@ class TypeChecker(NodeVisitor):
         symbol = self.current_scope.get(node.id)
         if symbol is None:
             raise NameError(f"Line {node.lineno}: Variable {node.id} has not been declared in this scope.")
-        return 'id'
+        return symbol.getType()
 
     def visit_StringNum(self, node):
         return 'str'
@@ -110,12 +163,12 @@ class TypeChecker(NodeVisitor):
         
         for row in rows:
             if len(row) != first_row_length:
-                print(f"ERROR: Matrix rows have inconsistent length at line {node.lineno}")
-        
+                print(f"Line {node.lineno}: Matrix rows have inconsistent length.")
+
             for elem in row:
                 t = self.visit(elem)
                 if t != first_row_type:
-                    print(f"ERROR: Matrix has mixed element types: {first_row_type} and {t} at line {node.lineno}")
+                    print(f"Line {node.lineno}: Matrix has mixed element types: {first_row_type} and {t}.")
 
         return f"matrix<{first_row_type}>"
 
@@ -124,7 +177,7 @@ class TypeChecker(NodeVisitor):
         size_type = self.visit(node.intnum)
 
         if size_type != "int":
-            print(f"ERROR: matrix function requires integer size at line {node.lineno}, "f"but got '{size_type}'.")
+            print(f"Line {node.lineno}: matrix function requires integer size, but got '{size_type}'.")
 
         return "matrix<float>"
 
@@ -135,6 +188,15 @@ class TypeChecker(NodeVisitor):
         cond = self.visit(node.expr)
         if cond != 'bool':
             raise TypeError(f"Line {node.lineno}: Condition type in if statement is {cond} - has to be bool.")
+        
+        self.current_scope = self.current_scope.pushScope("if")
+        self.visit(node.firstinstruction)
+        self.current_scope = self.current_scope.getParentScope()
+        if node.secondinstruction:
+            self.current_scope = self.current_scope.pushScope("else")
+            self.visit(node.secondinstruction)
+            self.current_scope = self.current_scope.getParentScope()
+        
 
     def visit_ReturnStatement(self,node):
         return self.visit(node.expr)
@@ -147,6 +209,12 @@ class TypeChecker(NodeVisitor):
         if cond != 'bool':
             raise TypeError(f"Line {node.lineno}: Condition type in if statement is {cond} - has to be bool.")
 
+        self.loop_depth += 1
+        self.current_scope = self.current_scope.pushScope("while")
+        self.visit(node.instruction)
+        self.current_scope = self.current_scope.getParentScope()
+        self.loop_depth -= 1
+
     def visit_ForLoop(self, node):
         from_type = self.visit(node.fr)
         to_type = self.visit(node.to)
@@ -156,13 +224,16 @@ class TypeChecker(NodeVisitor):
         if to_type != "int":
             print(f"ERROR: for-loop range end should be int, got {to_type} at line {node.lineno}.")
 
-        self.symbolTable.pushScope("for")
+        self.current_scope = self.current_scope.pushScope("for")
 
-        self.symbolTable.put(node.var, VariableSymbol(node.var, "int"))
+        self.current_scope.put(node.var, VariableSymbol(node.var, "int"))
 
+        self.loop_depth += 1
         self.visit(node.instruction)
 
-        self.symbolTable.popScope()
+        self.current_scope = self.current_scope.getParentScope()
+
+        self.loop_depth -= 1
 
     def visit_Assignment(self, node):
         '''
@@ -170,21 +241,33 @@ class TypeChecker(NodeVisitor):
         typy po obu stronach te same
         '''
         op = node.operator
-        var = node.value
+        var_name = node.value
         expr_type = self.visit(node.expr)
-        if op != "=":
-            symbol = self.current_scope.get(var)
-            if symbol is None:
-                raise NameError(f"Line {node.lineno}: Variable {node.id} has not been declared in this scope.")
-            
-        
 
-        
-        
-        
+        if op != "=":
+            symbol = self.current_scope.get(var_name)
+            if symbol is None:
+                raise NameError(f"Line {node.lineno}: Variable {var_name} has not been declared in this scope.")
+
+            var_type = symbol.getType()
+            if op in ['+=', '-=', '*=', '/=']:
+                if var_type in ('int','float') and expr_type in ('int','float'):
+                    if var_type == 'float' or expr_type == 'float':
+                        result_type = 'float'
+                    else:
+                        result_type = 'int'
+                else:
+                    raise TypeError(f"Line {node.lineno}: Operator {op} requires numeric operands, got {var_type} and {expr_type}.")
+            else:
+                raise ValueError(f"Line {node.lineno}: Unsupported assignment operator: {op}")
+            
+        else:
+            self.current_scope.put(var_name, VariableSymbol(var_name, expr_type))
 
     def visit_Block(self, node):
+        self.current_scope = self.current_scope.pushScope("block")
         self.visit(node.instructions)
+        self.current_scope = self.current_scope.getParentScope()
 
     def visit_Error(self, node):
         pass
