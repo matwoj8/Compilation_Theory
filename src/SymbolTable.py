@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 class Symbol(object):
-    def __init__(self, name, type=None):
+    def __init__(self, name, type=None,):
         self.name = name
         self.type = type
 
@@ -11,8 +11,9 @@ class Symbol(object):
 
 class VariableSymbol(Symbol):
 
-    def __init__(self, name, type):
+    def __init__(self, name, type, size=None):
         super().__init__(name, type)
+        self.size = size
 
 
 class FunctionSymbol(Symbol):
@@ -20,7 +21,11 @@ class FunctionSymbol(Symbol):
         super().__init__(name, return_type)
         self.param_types = param_types
 
+
 class SymbolTable(object):
+    def __repr__(self):
+        return f"<Scope {self.name}, symbols={list(self.symbols.keys())}>"
+
 
     def __init__(self, name, parent=None): # parent scope and symbol table name
         self.parent = parent

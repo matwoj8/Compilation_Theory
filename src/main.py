@@ -16,11 +16,12 @@ if __name__ == '__main__':
         print("Cannot open {0} file".format(filename))
         sys.exit(0)
 
-    Mparser = Mparser()
-    parser = yacc.yacc(module=Mparser)
+    scanner = Scanner()
+    parser = Mparser()
     text = file.read()
 
-    ast = parser.parse(text, lexer=Mparser.scanner)
+    ast = parser.parse(scanner.tokenize(text))
+    # ast.printTree()
 
     # Below code shows how to use visitor
     typeChecker = TypeChecker()   

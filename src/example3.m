@@ -21,7 +21,7 @@ if(N<10) {
 }
 else if(N<=15)
     print "N<=15";
-
+k = 20;
 while(k>10)
     k = k - 1;
 
@@ -42,8 +42,9 @@ while(k>0) {
 
 
 for i = 1:N
-  for j = i:M
-    print i, j;
+  print i;
+for j = 3:M
+    print j;
  
 
 for i = 1:N {

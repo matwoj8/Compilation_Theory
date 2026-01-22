@@ -59,7 +59,7 @@ class Mparser(Parser):
     def instruction(self, p):
         return ContinueStatement(lineno=p.lineno)
     
-    @_('PRINT list ";"')
+    @_('PRINT row ";"')
     def instruction(self, p):
         return PrintStatement(p[1], lineno=p.lineno)
 
@@ -101,7 +101,7 @@ class Mparser(Parser):
 
     @_('INTNUM')
     def expr(self, p):
-        return IntNum(p[0], lineno=p.lineno)
+        return IntNum(int(p[0]), lineno=p.lineno)
     
     @_('STRING')
     def expr(self, p):
@@ -128,29 +128,38 @@ class Mparser(Parser):
         return p[0]
         
 
-    @_(' "[" lists "]" ')
+    # @_(' "[" rows "]" ')
+    # def matrix(self, p):
+    #     return Matrix(p[1], lineno = p.lineno)
+
+    @_('"[" rows "]"')
     def matrix(self, p):
-        return Matrix(p[1], lineno = p.lineno)
+        return Matrix(p.rows, lineno=p.lineno)
 
-    @_('list ";" lists',
-    'list')
-    def lists(self, p):
-        if len(p) == 1:
-            return [p[0]]        
-        else:
-            return [p[0]] + p[2]
 
-    @_('expr "," list',
-    'expr')
-    def list(self, p):
-        if len(p) == 1:
-            return [p[0]]        
-        else:
-            return [p[0]] + p[2]
+    @_('row ";" rows')
+    def rows(self, p):
+        return [p.row] + p.rows
+
+
+    @_('row') # tu dodalem nawiasy
+    def rows(self, p):
+        return [p.row]
+
+
+    @_('expr "," row')
+    def row(self, p):
+        return [p.expr] + p.row
+
+
+    @_('expr')
+    def row(self, p):
+        return [p.expr]
+
 
     @_('mat_fun "(" INTNUM ")"')
     def matrix(self, p):
-        return MatFun(p[0] , IDNum(p[2], lineno = p.lineno), lineno=p.lineno)
+        return MatFun(p[0] , IntNum(p[2], lineno = p.lineno), lineno=p.lineno)
 
     
     @_('ZEROS',

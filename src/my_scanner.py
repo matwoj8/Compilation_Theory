@@ -5,7 +5,7 @@ from sly import Lexer
 class Scanner(Lexer):
 
     literals = { '(', ')', '{', '}', ';', '[', ']', ',', ':', '=', '.', '+', '-', '*', '/' }
-    tokens = {
+    tokens = (
         'DOTPLUS', 'DOTMINUS', 'DOTTIMES', 'DOTDIV',
     'PLUSASSIGN', 'MINUSASSIGN', 'TIMESASSIGN', 'DIVASSIGN',
 
@@ -19,7 +19,7 @@ class Scanner(Lexer):
 
     # inne
     'TRANSPOSE', 'ID', 'FLOATNUM', 'INTNUM', 'STRING'
-    }
+    )
     
     ignore = ' \t'
     ignore_comment = r'\#.*'

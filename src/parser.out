@@ -7,7 +7,7 @@ Rule 3     instructions_or_empty -> instructions
 Rule 4     instructions -> instructions instruction
 Rule 5     instructions -> instruction
 Rule 6     instruction -> { instructions }
-Rule 7     instruction -> PRINT list ;
+Rule 7     instruction -> PRINT row ;
 Rule 8     instruction -> CONTINUE ;
 Rule 9     instruction -> BREAK ;
 Rule 10    instruction -> assign ;
@@ -40,11 +40,11 @@ Rule 36    expr -> expr + expr  [precedence=left, level=6]
 Rule 37    tab -> ID [ expr , expr ]
 Rule 38    tab -> ID [ expr ]
 Rule 39    matrix -> mat_fun ( INTNUM )
-Rule 40    matrix -> [ lists ]
-Rule 41    lists -> list
-Rule 42    lists -> list ; lists
-Rule 43    list -> expr
-Rule 44    list -> expr , list
+Rule 40    matrix -> [ rows ]
+Rule 41    rows -> row
+Rule 42    rows -> row ; rows
+Rule 43    row -> expr
+Rule 44    row -> expr , row
 Rule 45    mat_fun -> ONES
 Rule 46    mat_fun -> EYE
 Rule 47    mat_fun -> ZEROS
@@ -120,12 +120,12 @@ if_i                 : 11
 instruction          : 4 5 48 48 49 52 53
 instructions         : 3 4 6
 instructions_or_empty : 1
-list                 : 7 41 42 44
-lists                : 40 42
 mat_fun              : 39
 matrix               : 15 54
 program              : 0
 return_i             : 14
+row                  : 7 41 42 44
+rows                 : 40 42
 tab                  : 55
 value                : 57 58 59 60 61
 while_l              : 13
@@ -140,7 +140,7 @@ state 0
     (4) instructions -> . instructions instruction
     (5) instructions -> . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -163,7 +163,7 @@ state 0
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -214,7 +214,7 @@ state 3
     (3) instructions_or_empty -> instructions .
     (4) instructions -> instructions . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -237,7 +237,7 @@ state 3
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -295,7 +295,7 @@ state 5
     (4) instructions -> . instructions instruction
     (5) instructions -> . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -318,7 +318,7 @@ state 5
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -352,9 +352,9 @@ state 5
 
 state 6
 
-    (7) instruction -> PRINT . list ;
-    (43) list -> . expr
-    (44) list -> . expr , list
+    (7) instruction -> PRINT . row ;
+    (43) row -> . expr
+    (44) row -> . expr , row
     (15) expr -> . matrix
     (16) expr -> . - expr
     (17) expr -> . ( expr )
@@ -378,7 +378,7 @@ state 6
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -393,7 +393,7 @@ state 6
     EYE             shift and go to state 25
     ZEROS           shift and go to state 26
 
-    list                           shift and go to state 29
+    row                            shift and go to state 29
     expr                           shift and go to state 30
     matrix                         shift and go to state 31
     mat_fun                        shift and go to state 22
@@ -573,7 +573,7 @@ state 19
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -621,11 +621,11 @@ state 22
 
 state 23
 
-    (40) matrix -> [ . lists ]
-    (41) lists -> . list
-    (42) lists -> . list ; lists
-    (43) list -> . expr
-    (44) list -> . expr , list
+    (40) matrix -> [ . rows ]
+    (41) rows -> . row
+    (42) rows -> . row ; rows
+    (43) row -> . expr
+    (44) row -> . expr , row
     (15) expr -> . matrix
     (16) expr -> . - expr
     (17) expr -> . ( expr )
@@ -649,7 +649,7 @@ state 23
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -664,8 +664,8 @@ state 23
     EYE             shift and go to state 25
     ZEROS           shift and go to state 26
 
-    lists                          shift and go to state 53
-    list                           shift and go to state 54
+    rows                           shift and go to state 53
+    row                            shift and go to state 54
     expr                           shift and go to state 30
     matrix                         shift and go to state 31
     mat_fun                        shift and go to state 22
@@ -713,7 +713,7 @@ state 28
     (6) instruction -> { instructions . }
     (4) instructions -> instructions . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -736,7 +736,7 @@ state 28
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -770,14 +770,14 @@ state 28
 
 state 29
 
-    (7) instruction -> PRINT list . ;
+    (7) instruction -> PRINT row . ;
     ;               shift and go to state 56
 
 
 state 30
 
-    (43) list -> expr .
-    (44) list -> expr . , list
+    (43) row -> expr .
+    (44) row -> expr . , row
     (22) expr -> expr . TRANSPOSE
     (23) expr -> expr . NEQ expr
     (24) expr -> expr . EQ expr
@@ -793,8 +793,8 @@ state 30
     (34) expr -> expr . * expr
     (35) expr -> expr . - expr
     (36) expr -> expr . + expr
-    ;               reduce using rule 43 (list -> expr .)
-    ]               reduce using rule 43 (list -> expr .)
+    ;               reduce using rule 43 (row -> expr .)
+    ]               reduce using rule 43 (row -> expr .)
     ,               shift and go to state 57
     TRANSPOSE       shift and go to state 58
     NEQ             shift and go to state 59
@@ -877,7 +877,7 @@ state 32
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -922,7 +922,7 @@ state 33
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1182,7 +1182,7 @@ state 41
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1227,7 +1227,7 @@ state 42
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1272,7 +1272,7 @@ state 43
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1317,7 +1317,7 @@ state 44
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1362,7 +1362,7 @@ state 45
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1408,7 +1408,7 @@ state 46
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1460,7 +1460,7 @@ state 48
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1505,7 +1505,7 @@ state 49
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1589,15 +1589,15 @@ state 52
 
 state 53
 
-    (40) matrix -> [ lists . ]
+    (40) matrix -> [ rows . ]
     ]               shift and go to state 86
 
 
 state 54
 
-    (41) lists -> list .
-    (42) lists -> list . ; lists
-    ]               reduce using rule 41 (lists -> list .)
+    (41) rows -> row .
+    (42) rows -> row . ; rows
+    ]               reduce using rule 41 (rows -> row .)
     ;               shift and go to state 87
 
 
@@ -1624,30 +1624,30 @@ state 55
 
 state 56
 
-    (7) instruction -> PRINT list ; .
-    {               reduce using rule 7 (instruction -> PRINT list ; .)
-    PRINT           reduce using rule 7 (instruction -> PRINT list ; .)
-    CONTINUE        reduce using rule 7 (instruction -> PRINT list ; .)
-    BREAK           reduce using rule 7 (instruction -> PRINT list ; .)
-    IF              reduce using rule 7 (instruction -> PRINT list ; .)
-    FOR             reduce using rule 7 (instruction -> PRINT list ; .)
-    WHILE           reduce using rule 7 (instruction -> PRINT list ; .)
-    RETURN          reduce using rule 7 (instruction -> PRINT list ; .)
-    ID              reduce using rule 7 (instruction -> PRINT list ; .)
-    [               reduce using rule 7 (instruction -> PRINT list ; .)
-    ONES            reduce using rule 7 (instruction -> PRINT list ; .)
-    EYE             reduce using rule 7 (instruction -> PRINT list ; .)
-    ZEROS           reduce using rule 7 (instruction -> PRINT list ; .)
-    $end            reduce using rule 7 (instruction -> PRINT list ; .)
-    }               reduce using rule 7 (instruction -> PRINT list ; .)
-    ELSE            reduce using rule 7 (instruction -> PRINT list ; .)
+    (7) instruction -> PRINT row ; .
+    {               reduce using rule 7 (instruction -> PRINT row ; .)
+    PRINT           reduce using rule 7 (instruction -> PRINT row ; .)
+    CONTINUE        reduce using rule 7 (instruction -> PRINT row ; .)
+    BREAK           reduce using rule 7 (instruction -> PRINT row ; .)
+    IF              reduce using rule 7 (instruction -> PRINT row ; .)
+    FOR             reduce using rule 7 (instruction -> PRINT row ; .)
+    WHILE           reduce using rule 7 (instruction -> PRINT row ; .)
+    RETURN          reduce using rule 7 (instruction -> PRINT row ; .)
+    ID              reduce using rule 7 (instruction -> PRINT row ; .)
+    [               reduce using rule 7 (instruction -> PRINT row ; .)
+    ONES            reduce using rule 7 (instruction -> PRINT row ; .)
+    EYE             reduce using rule 7 (instruction -> PRINT row ; .)
+    ZEROS           reduce using rule 7 (instruction -> PRINT row ; .)
+    $end            reduce using rule 7 (instruction -> PRINT row ; .)
+    }               reduce using rule 7 (instruction -> PRINT row ; .)
+    ELSE            reduce using rule 7 (instruction -> PRINT row ; .)
 
 
 state 57
 
-    (44) list -> expr , . list
-    (43) list -> . expr
-    (44) list -> . expr , list
+    (44) row -> expr , . row
+    (43) row -> . expr
+    (44) row -> . expr , row
     (15) expr -> . matrix
     (16) expr -> . - expr
     (17) expr -> . ( expr )
@@ -1671,7 +1671,7 @@ state 57
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1687,7 +1687,7 @@ state 57
     ZEROS           shift and go to state 26
 
     expr                           shift and go to state 30
-    list                           shift and go to state 88
+    row                            shift and go to state 88
     matrix                         shift and go to state 31
     mat_fun                        shift and go to state 22
 
@@ -1755,7 +1755,7 @@ state 59
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1800,7 +1800,7 @@ state 60
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1845,7 +1845,7 @@ state 61
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1890,7 +1890,7 @@ state 62
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1935,7 +1935,7 @@ state 63
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -1980,7 +1980,7 @@ state 64
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2025,7 +2025,7 @@ state 65
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2070,7 +2070,7 @@ state 66
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2115,7 +2115,7 @@ state 67
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2160,7 +2160,7 @@ state 68
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2205,7 +2205,7 @@ state 69
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2250,7 +2250,7 @@ state 70
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2295,7 +2295,7 @@ state 71
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2340,7 +2340,7 @@ state 72
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2691,7 +2691,7 @@ state 81
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2813,54 +2813,54 @@ state 85
 
 state 86
 
-    (40) matrix -> [ lists ] .
-    DIVASSIGN       reduce using rule 40 (matrix -> [ lists ] .)
-    TIMESASSIGN     reduce using rule 40 (matrix -> [ lists ] .)
-    MINUSASSIGN     reduce using rule 40 (matrix -> [ lists ] .)
-    PLUSASSIGN      reduce using rule 40 (matrix -> [ lists ] .)
-    =               reduce using rule 40 (matrix -> [ lists ] .)
-    ,               reduce using rule 40 (matrix -> [ lists ] .)
-    TRANSPOSE       reduce using rule 40 (matrix -> [ lists ] .)
-    NEQ             reduce using rule 40 (matrix -> [ lists ] .)
-    EQ              reduce using rule 40 (matrix -> [ lists ] .)
-    LE              reduce using rule 40 (matrix -> [ lists ] .)
-    GE              reduce using rule 40 (matrix -> [ lists ] .)
-    LT              reduce using rule 40 (matrix -> [ lists ] .)
-    GT              reduce using rule 40 (matrix -> [ lists ] .)
-    DOTDIV          reduce using rule 40 (matrix -> [ lists ] .)
-    DOTTIMES        reduce using rule 40 (matrix -> [ lists ] .)
-    DOTMINUS        reduce using rule 40 (matrix -> [ lists ] .)
-    DOTPLUS         reduce using rule 40 (matrix -> [ lists ] .)
-    /               reduce using rule 40 (matrix -> [ lists ] .)
-    *               reduce using rule 40 (matrix -> [ lists ] .)
-    -               reduce using rule 40 (matrix -> [ lists ] .)
-    +               reduce using rule 40 (matrix -> [ lists ] .)
-    ;               reduce using rule 40 (matrix -> [ lists ] .)
-    ]               reduce using rule 40 (matrix -> [ lists ] .)
-    )               reduce using rule 40 (matrix -> [ lists ] .)
-    :               reduce using rule 40 (matrix -> [ lists ] .)
-    {               reduce using rule 40 (matrix -> [ lists ] .)
-    PRINT           reduce using rule 40 (matrix -> [ lists ] .)
-    CONTINUE        reduce using rule 40 (matrix -> [ lists ] .)
-    BREAK           reduce using rule 40 (matrix -> [ lists ] .)
-    IF              reduce using rule 40 (matrix -> [ lists ] .)
-    FOR             reduce using rule 40 (matrix -> [ lists ] .)
-    WHILE           reduce using rule 40 (matrix -> [ lists ] .)
-    RETURN          reduce using rule 40 (matrix -> [ lists ] .)
-    ID              reduce using rule 40 (matrix -> [ lists ] .)
-    [               reduce using rule 40 (matrix -> [ lists ] .)
-    ONES            reduce using rule 40 (matrix -> [ lists ] .)
-    EYE             reduce using rule 40 (matrix -> [ lists ] .)
-    ZEROS           reduce using rule 40 (matrix -> [ lists ] .)
+    (40) matrix -> [ rows ] .
+    DIVASSIGN       reduce using rule 40 (matrix -> [ rows ] .)
+    TIMESASSIGN     reduce using rule 40 (matrix -> [ rows ] .)
+    MINUSASSIGN     reduce using rule 40 (matrix -> [ rows ] .)
+    PLUSASSIGN      reduce using rule 40 (matrix -> [ rows ] .)
+    =               reduce using rule 40 (matrix -> [ rows ] .)
+    ,               reduce using rule 40 (matrix -> [ rows ] .)
+    TRANSPOSE       reduce using rule 40 (matrix -> [ rows ] .)
+    NEQ             reduce using rule 40 (matrix -> [ rows ] .)
+    EQ              reduce using rule 40 (matrix -> [ rows ] .)
+    LE              reduce using rule 40 (matrix -> [ rows ] .)
+    GE              reduce using rule 40 (matrix -> [ rows ] .)
+    LT              reduce using rule 40 (matrix -> [ rows ] .)
+    GT              reduce using rule 40 (matrix -> [ rows ] .)
+    DOTDIV          reduce using rule 40 (matrix -> [ rows ] .)
+    DOTTIMES        reduce using rule 40 (matrix -> [ rows ] .)
+    DOTMINUS        reduce using rule 40 (matrix -> [ rows ] .)
+    DOTPLUS         reduce using rule 40 (matrix -> [ rows ] .)
+    /               reduce using rule 40 (matrix -> [ rows ] .)
+    *               reduce using rule 40 (matrix -> [ rows ] .)
+    -               reduce using rule 40 (matrix -> [ rows ] .)
+    +               reduce using rule 40 (matrix -> [ rows ] .)
+    ;               reduce using rule 40 (matrix -> [ rows ] .)
+    ]               reduce using rule 40 (matrix -> [ rows ] .)
+    )               reduce using rule 40 (matrix -> [ rows ] .)
+    :               reduce using rule 40 (matrix -> [ rows ] .)
+    {               reduce using rule 40 (matrix -> [ rows ] .)
+    PRINT           reduce using rule 40 (matrix -> [ rows ] .)
+    CONTINUE        reduce using rule 40 (matrix -> [ rows ] .)
+    BREAK           reduce using rule 40 (matrix -> [ rows ] .)
+    IF              reduce using rule 40 (matrix -> [ rows ] .)
+    FOR             reduce using rule 40 (matrix -> [ rows ] .)
+    WHILE           reduce using rule 40 (matrix -> [ rows ] .)
+    RETURN          reduce using rule 40 (matrix -> [ rows ] .)
+    ID              reduce using rule 40 (matrix -> [ rows ] .)
+    [               reduce using rule 40 (matrix -> [ rows ] .)
+    ONES            reduce using rule 40 (matrix -> [ rows ] .)
+    EYE             reduce using rule 40 (matrix -> [ rows ] .)
+    ZEROS           reduce using rule 40 (matrix -> [ rows ] .)
 
 
 state 87
 
-    (42) lists -> list ; . lists
-    (41) lists -> . list
-    (42) lists -> . list ; lists
-    (43) list -> . expr
-    (44) list -> . expr , list
+    (42) rows -> row ; . rows
+    (41) rows -> . row
+    (42) rows -> . row ; rows
+    (43) row -> . expr
+    (44) row -> . expr , row
     (15) expr -> . matrix
     (16) expr -> . - expr
     (17) expr -> . ( expr )
@@ -2884,7 +2884,7 @@ state 87
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -2899,17 +2899,17 @@ state 87
     EYE             shift and go to state 25
     ZEROS           shift and go to state 26
 
-    list                           shift and go to state 54
-    lists                          shift and go to state 110
+    row                            shift and go to state 54
+    rows                           shift and go to state 110
     expr                           shift and go to state 30
     matrix                         shift and go to state 31
     mat_fun                        shift and go to state 22
 
 state 88
 
-    (44) list -> expr , list .
-    ;               reduce using rule 44 (list -> expr , list .)
-    ]               reduce using rule 44 (list -> expr , list .)
+    (44) row -> expr , row .
+    ;               reduce using rule 44 (row -> expr , row .)
+    ]               reduce using rule 44 (row -> expr , row .)
 
 
 state 89
@@ -3697,7 +3697,7 @@ state 104
     (48) if_i -> IF ( expr ) . instruction ELSE instruction
     (49) if_i -> IF ( expr ) . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -3720,7 +3720,7 @@ state 104
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -3813,7 +3813,7 @@ state 106
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -3846,7 +3846,7 @@ state 108
 
     (52) while_l -> WHILE ( expr ) . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -3869,7 +3869,7 @@ state 108
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -3945,8 +3945,8 @@ state 109
 
 state 110
 
-    (42) lists -> list ; lists .
-    ]               reduce using rule 42 (lists -> list ; lists .)
+    (42) rows -> row ; rows .
+    ]               reduce using rule 42 (rows -> row ; rows .)
 
 
 state 111
@@ -3997,7 +3997,7 @@ state 112
     (35) expr -> . expr - expr
     (36) expr -> . expr + expr
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (45) mat_fun -> . ONES
     (46) mat_fun -> . EYE
     (47) mat_fun -> . ZEROS
@@ -4077,7 +4077,7 @@ state 115
 
     (48) if_i -> IF ( expr ) instruction ELSE . instruction
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -4100,7 +4100,7 @@ state 115
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
@@ -4150,7 +4150,7 @@ state 116
     (35) expr -> expr . - expr
     (36) expr -> expr . + expr
     (6) instruction -> . { instructions }
-    (7) instruction -> . PRINT list ;
+    (7) instruction -> . PRINT row ;
     (8) instruction -> . CONTINUE ;
     (9) instruction -> . BREAK ;
     (10) instruction -> . assign ;
@@ -4173,7 +4173,7 @@ state 116
     (55) value -> . tab
     (56) value -> . ID
     (39) matrix -> . mat_fun ( INTNUM )
-    (40) matrix -> . [ lists ]
+    (40) matrix -> . [ rows ]
     (37) tab -> . ID [ expr , expr ]
     (38) tab -> . ID [ expr ]
     (45) mat_fun -> . ONES
