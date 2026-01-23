@@ -192,21 +192,21 @@ class Interpreter(object):
         if cond:
             try:
                 self.memory.push('if_true')
-                if isinstance(node.instruction, list):
-                    for instr in node.instruction:
+                if isinstance(node.firstinstruction, list):
+                    for instr in node.firstinstruction:
                         instr.accept(self)
                 else:
-                    node.instruction.accept(self)
+                    node.firstinstruction.accept(self)
             finally:
                 self.memory.pop()
-        elif node.elseinstruction:
+        elif node.secondinstruction:
             try:
                 self.memory.push('if_false')
-                if isinstance(node.elseinstruction, list):
-                    for instr in node.elseinstruction:
+                if isinstance(node.secondinstruction, list):
+                    for instr in node.secondinstruction:
                         instr.accept(self)
                 else:
-                    node.elseinstruction.accept(self)
+                    node.secondinstruction.accept(self)
             finally:
                 self.memory.pop()
         
@@ -279,12 +279,12 @@ class Interpreter(object):
     @when(AST.Block)
     def visit(self, node):
         r = None
-        self.memory.push_scope()
+        self.memory.push("block")
         try:
             for instr in node.instructions:
                 r = instr.accept(self)
         finally:
-            self.memory.pop_scope()
+            self.memory.pop()
         return r
     
 
