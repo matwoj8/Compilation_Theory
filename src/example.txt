@@ -5,9 +5,11 @@ D1 = A.+B ; # add element-wise A with transpose of B
 
 A[2, 1] =2.3;
 B[6,6] = 5.5;
+
+A = [[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8]];
+B = [[1,2,43,4,5,6,8],[1,32,3,4,5,64,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8],[1,2,3,4,5,6,8]];
  
 
-D1[2, 2] = 10.0;
 D1 -= A.-B' ; # substract element-wise A with transpose of B
 D1 *= A.*B' ; # multiply element-wise A with transpose of B
 D1 /= A./B' ; # divide element-wise A with transpose of B

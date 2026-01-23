@@ -43,8 +43,8 @@ while(k>0) {
 
 for i = 1:N
   print i;
-for j = 3:M
-    print j;
+  for j = i:M
+    print i, j;
  
 
 for i = 1:N {
