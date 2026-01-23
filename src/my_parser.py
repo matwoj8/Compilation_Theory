@@ -59,9 +59,14 @@ class Mparser(Parser):
     def instruction(self, p):
         return ContinueStatement(lineno=p.lineno)
     
-    @_('PRINT row ";"')
+    @_('PRINT expr ";"')
     def instruction(self, p):
-        return PrintStatement(p[1], lineno=p.lineno)
+        return PrintStatement([p[1]], lineno=p.lineno)
+
+    @_('PRINT expr "," row ";"')
+    def instruction(self, p):
+        return PrintStatement([p[1]] + p[3], lineno=p.lineno)
+
 
         
 
@@ -97,6 +102,10 @@ class Mparser(Parser):
     'ID "[" expr "," expr "]"')
     def tab(self, p):
         return IdTab(p[0], p[2], p[4] if len(p) == 6 else None, lineno=p.lineno)
+
+    @_('tab')
+    def expr(self, p):
+        return p[0]
 
 
     @_('INTNUM')

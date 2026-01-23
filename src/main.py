@@ -24,8 +24,8 @@ if __name__ == '__main__':
     ast = parser.parse(scanner.tokenize(text))
 
     # Below code shows how to use visitor
-    typeChecker = TypeChecker()   
-    typeChecker.visit(ast)   # or alternatively ast.accept(typeChecker)
+    # typeChecker = TypeChecker()   
+    # typeChecker.visit(ast)   # or alternatively ast.accept(typeChecker)
 
     print("Interpreter: ")
     interpreter = Interpreter()

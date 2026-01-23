@@ -140,15 +140,21 @@ class Interpreter(object):
         if node.operator == 'TRANSPOSE':
             if isinstance(r, list):
                 if all(isinstance(row, list) for row in r):
-                    # r is a matrix
+                    #  matrix
                     return [list(row) for row in zip(*r)]
                 else:
-                    # r is a vector
+                    #  vector
                     return [[elem] for elem in r]
             else:
-                return r  # scalar remains unchanged
-        else:
-            return -r  # UMINUS
+                return r 
+        if isinstance(r, list):
+            # matrix or vector
+            if all(isinstance(row, list) for row in r):
+                return [[-elem for elem in row] for row in r]
+            else:
+                return [-elem for elem in r]
+
+        return -r
 
     @when(AST.PrintStatement)
     def visit(self, node):
@@ -157,7 +163,6 @@ class Interpreter(object):
 
     @when(AST.IdTab)
     def visit(self, node):
-        # return the value of the indexed id
         pass
 
     @when(AST.IntNum)
@@ -278,14 +283,12 @@ class Interpreter(object):
     
     @when(AST.Block)
     def visit(self, node):
-        r = None
         self.memory.push("block")
         try:
             for instr in node.instructions:
-                r = instr.accept(self)
+                instr.accept(self)
         finally:
             self.memory.pop()
-        return r
     
 
     @when(AST.Assignment)

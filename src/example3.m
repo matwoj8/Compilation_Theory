@@ -43,7 +43,9 @@ while(k>0) {
 
 for i = 1:N
   print i;
-  for j = i:M
+
+i = 3;
+for j = i:M
     print i, j;
  
 
