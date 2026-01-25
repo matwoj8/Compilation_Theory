@@ -130,7 +130,7 @@ for i = 1:99 {
 python main.py example.m
 ```
 
-# Execution Pipeline:
+## Execution Pipeline:
 - lexical analysis
 
 - parsing and AST construction
